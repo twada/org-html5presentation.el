@@ -921,13 +921,6 @@ PUB-DIR is set, use this as the publishing directory."
 
     <title>%s</title>
 
-    <!--
-    <script src=\"http://www.google.com/jsapi?key=ABQIAAAAciAr-YcJOX4sVbBQF5yFOBRI2zyDwyJhdEdO9xa_t4eLz9AjchSe2DA_dgZ-3Akmxq1pd4ElyBEStA\"></script>
-    <script>google.load(\"maps\", \"2\");</script>
-      -->
-
-    <!-- <link type=\"text/css\" href=\"./src/scrollbar.css\" rel=\"stylesheet\"> -->
-
     <style>
       .notes { display: none; }
       .stroke {
@@ -1322,8 +1315,10 @@ PUB-DIR is set, use this as the publishing directory."
       }
 
     </style>
-  </head><body>
-    <div class=\"presentation\"><div class=\"slides\">" title))
+  </head>
+  <body>
+    <div class=\"presentation\">
+      <div class=\"slides\">" title))
 ;;         (insert (format
 ;;                  "%s
 ;; <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"
@@ -2905,7 +2900,13 @@ When TITLE is nil, just close all open levels."
 ;;                         level href
 ;;                         extra-targets
 ;;                         title level level suffix))
-        (insert (format "\n<div class=\"slide\">\n<header><h1>%s</h1></header>\n\n<section>"
+
+        (insert (format "
+<div class=\"slide\">
+  <header>
+    <h1>%s</h1>
+  </header>
+  <section>"
                         ;level
                         title
                         ;level
