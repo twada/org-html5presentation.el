@@ -29,6 +29,8 @@
 
 ;; About HTML5 presentation, see http://www.html5rocks.com/
 
+;; fork of https://gist.github.com/509761
+
 ;;; Code:
 
 (require 'org-exp)
