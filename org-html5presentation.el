@@ -769,6 +769,7 @@ PUB-DIR is set, use this as the publishing directory."
          (org-levels-open (make-vector org-level-max nil))
          (date (plist-get opt-plist :date))
          (author      (plist-get opt-plist :author))
+         (current-tags nil)
          (title       (or (and subtree-p (org-export-get-title-from-subtree))
                           (plist-get opt-plist :title)
                           (and (not body-only)
@@ -2854,22 +2855,26 @@ When TITLE is nil, just close all open levels."
     (when title
       ;; If title is nil, this means this function is called to close
       ;; all levels, so the rest is done only if title is given
-        (when (string-match (org-re "\\(:[[:alnum:]_@:]+:\\)[ \t]*$") title)
-          (setq title (replace-match
-                       (if org-export-with-tags
-                           (save-match-data
-                             (concat
-                              "&nbsp;&nbsp;&nbsp;<span class=\"tag\">"
-                              (mapconcat
-                               (lambda (x)
-                                 (format "<span class=\"%s\">%s</span>"
-                                         (org-export-html5presentation-get-tag-class-name x)
-                                         x))
-                               (org-split-string (match-string 1 title) ":")
-                               "&nbsp;")
-                              "</span>"))
-                         "")
-                       t t title)))
+      (if (string-match (org-re "\\(:[[:alnum:]_@:]+:\\)[ \t]*$") title)
+          (progn
+            (setq current-tags 
+                  (if org-export-with-tags
+                      (save-match-data
+                        (concat
+                         " "
+                         (mapconcat
+                          (lambda (x)
+                            (org-export-html5presentation-get-tag-class-name x)
+                            )
+                          (org-split-string (match-string 1 title) ":")
+                          " ")
+                         )
+                        )
+                    ""))
+            (setq title (replace-match "" t t title)))
+        (setq current-tags nil))
+      ;; (message (format "CURRENT TAGS %s" current-tags))
+
       (if (> level umax)
           (progn
             (if (aref org-levels-open (1- level))
@@ -2904,11 +2909,12 @@ When TITLE is nil, just close all open levels."
 ;;                         title level level suffix))
 
         (insert (format "
-<div class=\"slide\">
+<div class=\"slide%s\">
   <header>
     <h1>%s</h1>
   </header>
   <section>"
+                        (if current-tags current-tags "")
                         ;level
                         title
                         ;level
