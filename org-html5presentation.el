@@ -892,7 +892,7 @@ PUB-DIR is set, use this as the publishing directory."
                        umax))
       (unless body-only
         ;; File header
-        (insert "
+        (insert (format "
 <!DOCTYPE html>
 <!--
   Copyright 2010 Google Inc.
@@ -919,7 +919,7 @@ PUB-DIR is set, use this as the publishing directory."
     <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
     <meta http-equiv=\"X-UA-Compatible\" content=\"chrome=1\">
 
-    <title>HTML5 presentation</title>
+    <title>%s</title>
 
     <!--
     <script src=\"http://www.google.com/jsapi?key=ABQIAAAAciAr-YcJOX4sVbBQF5yFOBRI2zyDwyJhdEdO9xa_t4eLz9AjchSe2DA_dgZ-3Akmxq1pd4ElyBEStA\"></script>
@@ -947,16 +947,16 @@ PUB-DIR is set, use this as the publishing directory."
 
       div.presentation {
         position: absolute;
-        width: 100%;
+        width: 100%%;
         display: table-cell;
         vertical-align: middle;
-        height: 100%;
+        height: 100%%;
         background: inherit;
       }
 
       div.slides {
-        width: 100%;
-        height: 100%;
+        width: 100%%;
+        height: 100%%;
         overflow: hidden;
         left: 0;
         top: 0;
@@ -973,8 +973,8 @@ PUB-DIR is set, use this as the publishing directory."
         overflow: hidden;
         width: 900px;
         height: 700px;
-        left: 50%;
-        top: 50%;
+        left: 50%%;
+        top: 50%%;
         margin-top: -350px;
         background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
         -webkit-transition: margin 0.25s ease-in-out;
@@ -1056,7 +1056,7 @@ PUB-DIR is set, use this as the publishing directory."
       }
 
       body.three-d div.presentation {
-        /*background: -webkit-gradient(radial, 50% 50%, 10, 50% 50%, 1000, from(#333), to(#000));        */
+        /*background: -webkit-gradient(radial, 50%% 50%%, 10, 50%% 50%%, 1000, from(#333), to(#000));        */
       }
 
       body.three-d div.slides {
@@ -1106,7 +1106,7 @@ PUB-DIR is set, use this as the publishing directory."
 
       h1 {
         display: inline;
-        font-size: 100%;
+        font-size: 100%%;
         font-weight: normal;
         padding: 0;
         margin: 0;
@@ -1144,12 +1144,12 @@ PUB-DIR is set, use this as the publishing directory."
         color: inherit;
         display: inline-block;
         text-decoration: none;
-        line-height: 110%;
+        line-height: 110%%;
         border-bottom: 2px solid #3f3f3f;
       }
 
       #wmap a {
-        line-height: 100%;
+        line-height: 100%%;
         border-bottom: none;
       }
 
@@ -1178,7 +1178,7 @@ PUB-DIR is set, use this as the publishing directory."
       }
 
       section.center {
-        line-height: 180%;
+        line-height: 180%%;
         text-align: center;
         display: table-cell;
         vertical-align: middle;
@@ -1214,7 +1214,7 @@ PUB-DIR is set, use this as the publishing directory."
         padding: 3px;
       }
       input[type=\"range\"] {
-        width: 100%;
+        width: 100%%;
       }
 
       button {
@@ -1317,13 +1317,13 @@ PUB-DIR is set, use this as the publishing directory."
 
       info {
         display: block;
-        font-size: 50%;
+        font-size: 50%%;
         text-align: center;
       }
 
     </style>
   </head><body>
-    <div class=\"presentation\"><div class=\"slides\">")
+    <div class=\"presentation\"><div class=\"slides\">" title))
 ;;         (insert (format
 ;;                  "%s
 ;; <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"
