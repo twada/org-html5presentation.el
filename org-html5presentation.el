@@ -650,7 +650,7 @@ MAY-INLINE-P allows inlining it as an image."
             (let
                ((str (org-export-html5presentation-format-href thefile)))
               (if (and type (not (string= "file" type))
-                       (org-string-match-p "^//" str))
+                       (string-match-p "^//" str))
                   (concat type ":" str)
                   str)))
 
