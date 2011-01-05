@@ -896,38 +896,40 @@ PUB-DIR is set, use this as the publishing directory."
       (unless body-only
         ;; File header
         (insert (format "
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <!--
   Copyright 2010 Google Inc.
-
+ 
   Licensed under the Apache License, Version 2.0 (the \"License\");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
+ 
      http://www.apache.org/licenses/LICENSE-2.0
-
+ 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an \"AS IS\" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-
+ 
   Original slides: Marcin Wichary (mwichary@google.com)
-  Modifications: Ernest Delgado (ernestd@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
                  Alex Russell (slightlyoff@chromium.org)
                  Brad Neuberg
--->
-<html manifest=\"/html5/src/slides_manifest.php\">
-<head>
-    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
-    <meta http-equiv=\"X-UA-Compatible\" content=\"chrome=1\">
+--> 
+<html>  
+  <head> 
+    <meta charset=\"utf-8\" /> 
+    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge;chrome=1\" /> 
 
     <title>%s</title>
 
-    <link type=\"text/css\" href=\"./legacy.css\" rel=\"stylesheet\">
+    <link id=\"prettify-link\" href=\"./prettify.css\" rel=\"stylesheet\" disabled /> 
+    <link type=\"text/css\" href=\"./default.css\" rel=\"stylesheet\">
   </head>
   <body>
     <div class=\"presentation\">
+      <div id=\"presentation-counter\">Loading...</div> 
       <div class=\"slides\">" title))
 ;;         (insert (format
 ;;                  "%s
@@ -973,21 +975,47 @@ PUB-DIR is set, use this as the publishing directory."
 
         (when (plist-get opt-plist :auto-preamble)
           (insert (format "
-<div class=\"slide\">
-  <section class=\"center intro\">
-    <style>
-      span.strike { text-decoration:line-through;}
-    </style>
-    <h2>
-      %s
-    </h2>
-    <p style=\"margin-top:100px\">
-      %s
-    </p>
-    <p style=\"font-size: 25px; line-height: 180%%;\">Press <span class=\"key\">&rarr;</span> key to advance.<br />
-    Zoom in/out: <span class=\"key\">Ctrl or Command</span> + <span class=\"key\">+/-</span></p>
-  </section>
-</div>" title author))
+<div class=\"slide\" id=\"landing-slide\">
+  <style> 
+    #landing-slide #presentation-title {
+      color: black;
+      letter-spacing: -2px;
+      font-size: 96px;
+    }
+    #landing-slide #presentation-author {
+      margin-top:100px;
+      font-size: 35px;
+      letter-spacing: -1px;
+    }
+    #landing-slide p {
+      font-size: 25px;
+      line-height: 180%%;
+    }
+  </style> 
+  <section class=\"middle\"> 
+    <h1 id=\"presentation-title\">%s</h1> 
+    <h3 id=\"presentation-author\">%s</h3> 
+    <p>Press <span id=\"left-init-key\" class=\"key\">&rarr;</span> key to advance.</p> 
+  </section> 
+</div>
+
+<div class=\"slide\" id=\"controls-slide\"> 
+  <style> 
+    #controls-slide li, #controls-slide p {
+      font-size: 35px;
+    }
+  </style> 
+  <section> 
+    <p>Slides controls, press:</p> 
+    <ul> 
+      <li><span class=\"key\">&larr;</span> and <span class=\"key\">&rarr;</span> to move around.</li> 
+      <li><span class=\"key\">Ctrl/Command</span> and <span class=\"key\">+</span> or <span class=\"key\">-</span> to zoom in and out if slides don’t fit.</li> 
+      <li><span class=\"key\">T</span> to change the theme.</li> 
+      <li><span class=\"key\">H</span> to toggle syntax highlight.</li> 
+    </ul> 
+  </section> 
+</div> 
+" title author))
 ;;           (if title (insert (format org-export-html5presentation-title-format
 ;;                                     (org-html5presentation-expand title))))
           ))
@@ -1659,201 +1687,443 @@ PUB-DIR is set, use this as the publishing directory."
         (insert
 "
 </div>
-<script>
-  (function() {
-    // Since we don't have the fallback of attachEvent and
-    // other IE only stuff we won't try to run JS for IE.
-    // It will run though when using Google Chrome Frame
-    if (document.all) { return; }
-
-    var currentSlideNo;
-    var notesOn = false;
-    var slides = document.getElementsByClassName('slide');
-    var touchStartX = 0;
-
-    // var slide_hash = window.location.hash.replace(/#/, '');
-    // if (slide_hash) {
-    //   for (var i = 0, len = slides.length; i < len; i++) {
-    //     if (slides[i].id == slide_hash) {
-    //       currentSlideNo = i;
-    //       updateSlideClasses();
-    //     }
-    //   }
-    // }
-
-    var spaces = /\\s+/, a1 = [\"\"];
-
-    var str2array = function(s) {
-      if (typeof s == \"string\" || s instanceof String) {
-        if (s.indexOf(\" \") < 0) {
-          a1[0] = s;
-          return a1;
-        } else {
-          return s.split(spaces);
+    <script defer> 
+      (function() {
+        var doc = document;
+        var disableBuilds = false;
+        
+        var ctr = 0;
+        var spaces = /\s+/, a1 = [''];
+ 
+        var toArray = function(list) {
+          return Array.prototype.slice.call(list || [], 0);
+        };
+ 
+        var byId = function(id) {
+          if (typeof id == 'string') { return doc.getElementById(id); }
+          return id;
+        };
+        
+        var query = function(query, root) {
+          return queryAll(query, root)[0];
         }
-      }
-      return s;
-    };
-
-    var trim = function(str) {
-      return str.replace(/^\\s\\s*/, '').replace(/\\s\\s*$/, '');
-    };
-
-    var addClass = function(node, classStr) {
-      classStr = str2array(classStr);
-      var cls = \" \" + node.className + \" \";
-      for (var i = 0, len = classStr.length, c; i < len; ++i) {
-        c = classStr[i];
-        if (c && cls.indexOf(\" \" + c + \" \") < 0) {
-          cls += c + \" \";
-        }
-      }
-      node.className = trim(cls);
-    };
-
-    var removeClass = function(node, classStr) {
-      var cls;
-      if (classStr !== undefined) {
-        classStr = str2array(classStr);
-        cls = \" \" + node.className + \" \";
-        for (var i = 0, len = classStr.length; i < len; ++i) {
-          cls = cls.replace(\" \" + classStr[i] + \" \", \" \");
-        }
-        cls = trim(cls);
-      } else {
-        cls = \"\";
-      }
-      if (node.className != cls) {
-        node.className = cls;
-      }
-    };
-
-    var getSlideEl = function(slideNo) {
-      if (slideNo > 0) {
-        return slides[slideNo - 1];
-      } else {
-        return null;
-      }
-    };
-
-    var getSlideTitle = function(slideNo) {
-      var el = getSlideEl(slideNo);
-
-      if (el) {
-        return el.getElementsByTagName('header')[0].innerHTML;
-      } else {
-        return null;
-      }
-    };
-
-    var changeSlideElClass = function(slideNo, className) {
-      var el = getSlideEl(slideNo);
-
-      if (el) {
-        removeClass(el, 'far-past past current future far-future');
-        addClass(el, className);
-      }
-    };
-
-    var updateSlideClasses = function() {
-      window.location.hash = \"slide\" + currentSlideNo;
-      changeSlideElClass(currentSlideNo - 2, 'far-past');
-      changeSlideElClass(currentSlideNo - 1, 'past');
-      changeSlideElClass(currentSlideNo, 'current');
-      changeSlideElClass(currentSlideNo + 1, 'future');
-      changeSlideElClass(currentSlideNo + 2, 'far-future');
-    };
-
-    var nextSlide = function() {
-      if (currentSlideNo < slides.length) {
-        currentSlideNo++;
-      }
-
-      updateSlideClasses();
-    };
-
-    var prevSlide = function() {
-      if (currentSlideNo > 1) {
-        currentSlideNo--;
-      }
-      updateSlideClasses();
-    };
-
-    var showNotes = function() {
-      var notes = document.querySelectorAll('.notes');
-      for (var i = 0, len = notes.length; i < len; i++) {
-        notes[i].style.display = (notesOn) ? 'none':'block';
-      }
-      notesOn = (notesOn) ? false:true;
-    };
-
-    var switch3D = function() {
-      if (document.body.className.indexOf('three-d') == -1) {
-        document.getElementsByClassName('presentation')[0].style.webkitPerspective = '1000px';
-        document.body.className += ' three-d';
-      } else {
-        window.setTimeout(\"document.getElementsByClassName('presentation')[0].style.webkitPerspective = '0';\", 2000);
-        document.body.className = document.body.className.replace(/three-d/, '');
-      }
-    };
-
-    var handleBodyKeyDown = function(event) {
-      // console.log(event.keyCode);
-      switch (event.keyCode) {
-        case 37: // left arrow
-          prevSlide();
-          break;
-        case 39: // right arrow
-        // case 32: // space
-          nextSlide();
-          break;
-        case 50: // 2
-          showNotes();
-          break;
-        case 51: // 3
-          switch3D();
-          break;
-      }
-    };
-
-    var addTouchListeners = function() {
-      document.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].pageX;
-      }, false);
-      document.addEventListener('touchend', function(e) {
-        var pixelsMoved = touchStartX - e.changedTouches[0].pageX;
-        var SWIPE_SIZE = 150;
-        if (pixelsMoved > SWIPE_SIZE) {
-          nextSlide();
-        }
-        else if (pixelsMoved < -SWIPE_SIZE) {
-         prevSlide();
-        }
-      }, false);
-    };
-
-    // initialize
-
-    (function() {
-      if (window.location.hash != \"\") {
-        currentSlideNo = Number(window.location.hash.replace('#slide', ''));
-      } else {
-        currentSlideNo = 1;
-      }
-
-      document.addEventListener('keydown', handleBodyKeyDown, false);
-
-      var els = slides;
-      for (var i = 0, el; el = els[i]; i++) {
-        addClass(el, 'slide far-future');
-      }
-      updateSlideClasses();
-
-      // add support for finger events (filter it by property detection?)
-      addTouchListeners();
-    })();
-  })();
-</script>")
+        
+        var queryAll = function(query, root) {
+          if (!query) { return []; }
+          if (typeof query != 'string') { return toArray(query); }
+          if (typeof root == 'string') {
+            root = byId(root);
+            if(!root){ return []; }
+          }
+ 
+          root = root || document;
+          var rootIsDoc = (root.nodeType == 9);
+          var doc = rootIsDoc ? root : (root.ownerDocument || document);
+ 
+          // rewrite the query to be ID rooted
+          if (!rootIsDoc || ('>~+'.indexOf(query.charAt(0)) >= 0)) {
+            root.id = root.id || ('qUnique' + (ctr++));
+            query = '#' + root.id + ' ' + query;
+          }
+          // don't choke on something like \".yada.yada >\"
+          if ('>~+'.indexOf(query.slice(-1)) >= 0) { query += ' *'; }
+          return toArray(doc.querySelectorAll(query));
+        };
+ 
+        var strToArray = function(s) {
+          if (typeof s == 'string' || s instanceof String) {
+            if (s.indexOf(' ') < 0) {
+              a1[0] = s;
+              return a1;
+            } else {
+              return s.split(spaces);
+            }
+          }
+          return s;
+        };
+ 
+        // Needed for browsers that don't support String.trim() (e.g. iPad)
+        var trim = function(str) {
+          return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        };
+ 
+        var addClass = function(node, classStr) {
+          classStr = strToArray(classStr);
+          var cls = ' ' + node.className + ' ';
+          for (var i = 0, len = classStr.length, c; i < len; ++i) {
+            c = classStr[i];
+            if (c && cls.indexOf(' ' + c + ' ') < 0) {
+              cls += c + ' ';
+            }
+          }
+          node.className = trim(cls);
+        };
+ 
+        var removeClass = function(node, classStr) {
+          var cls;
+          if (classStr !== undefined) {
+            classStr = strToArray(classStr);
+            cls = ' ' + node.className + ' ';
+            for (var i = 0, len = classStr.length; i < len; ++i) {
+              cls = cls.replace(' ' + classStr[i] + ' ', ' ');
+            }
+            cls = trim(cls);
+          } else {
+            cls = '';
+          }
+          if (node.className != cls) {
+            node.className = cls;
+          }
+        };
+ 
+        var toggleClass = function(node, classStr) {
+          var cls = ' ' + node.className + ' ';
+          if (cls.indexOf(' ' + trim(classStr) + ' ') >= 0) {
+            removeClass(node, classStr);
+          } else {
+            addClass(node, classStr);
+          }
+        };
+ 
+        var ua = navigator.userAgent;
+        var isFF = parseFloat(ua.split('Firefox/')[1]) || undefined;
+        var isWK = parseFloat(ua.split('WebKit/')[1]) || undefined;
+        var isOpera = parseFloat(ua.split('Opera/')[1]) || undefined;
+ 
+        var canTransition = (function() {
+          var ver = parseFloat(ua.split('Version/')[1]) || undefined;
+          // test to determine if this browser can handle CSS transitions.
+          var cachedCanTransition = 
+            (isWK || (isFF && isFF > 3.6 ) || (isOpera && ver >= 10.5));
+          return function() { return cachedCanTransition; }
+        })();
+ 
+        //
+        // Slide class
+        //
+        var Slide = function(node, idx) {
+          this._node = node;
+          if (idx >= 0) {
+            this._count = idx + 1;
+          }
+          if (this._node) {
+            addClass(this._node, 'slide distant-slide');
+          }
+          this._makeCounter();
+          this._makeBuildList();
+        };
+ 
+        Slide.prototype = {
+          _node: null,
+          _count: 0,
+          _buildList: [],
+          _visited: false,
+          _currentState: '',
+          _states: [ 'distant-slide', 'far-past',
+                     'past', 'current', 'future',
+                     'far-future', 'distant-slide' ],
+          setState: function(state) {
+            if (typeof state != 'string') {
+              state = this._states[state];
+            }
+            if (state == 'current' && !this._visited) {
+              this._visited = true;
+              this._makeBuildList();
+            }
+            removeClass(this._node, this._states);
+            addClass(this._node, state);
+            this._currentState = state;
+ 
+            // delay first auto run. Really wish this were in CSS.
+            /*
+            this._runAutos();
+            */
+            var _t = this;
+            setTimeout(function(){ _t._runAutos(); } , 400);
+ 
+            if (state == 'current') {
+              this._onLoad();
+            } else {
+              this._onUnload();
+            }
+          },
+          _onLoad: function() {
+            this._fireEvent('onload');
+            this._showFrames();
+          },
+          _onUnload: function() {
+            this._fireEvent('onunload');
+            this._hideFrames();
+          },
+          _fireEvent: function(name) {
+            var eventSrc = this._node.getAttribute(name);
+            if (eventSrc) {
+              eventSrc = '(function() { ' + eventSrc + ' })';
+              var fn = eval(eventSrc);
+              fn.call(this._node);
+            }
+          },
+          _showFrames: function() {
+            var frames = queryAll('iframe', this._node);
+            function show() {
+              frames.forEach(function(el) {
+                var _src = el.getAttribute('_src');
+                if (_src && _src.length) {
+                  el.src = _src;
+                }
+              });
+            }
+            setTimeout(show, 0);
+          },
+          _hideFrames: function() {
+            var frames = queryAll('iframe', this._node);
+            function hide() {
+              frames.forEach(function(el) {
+                var _src = el.getAttribute('_src');
+                if (_src && _src.length) {
+                  el.src = '';
+                }
+              });
+            }
+            setTimeout(hide, 250);
+          },
+          _makeCounter: function() {
+            if(!this._count || !this._node) { return; }
+            var c = doc.createElement('span');
+            c.textContent = this._count;
+            c.className = 'counter';
+            this._node.appendChild(c);
+          },
+          _makeBuildList: function() {
+            this._buildList = [];
+            if (disableBuilds) { return; }
+            if (this._node) {
+              this._buildList = queryAll('[data-build] > *', this._node);
+            }
+            this._buildList.forEach(function(el) {
+              addClass(el, 'to-build');
+            });
+          },
+          _runAutos: function() {
+            if (this._currentState != 'current') {
+              return;
+            }
+            // find the next auto, slice it out of the list, and run it
+            var idx = -1;
+            this._buildList.some(function(n, i) {
+              if (n.hasAttribute('data-auto')) {
+                idx = i;
+                return true;
+              }
+              return false;
+            });
+            if (idx >= 0) {
+              var elem = this._buildList.splice(idx, 1)[0];
+              var transitionEnd = isWK ? 'webkitTransitionEnd' : (isFF ? 'mozTransitionEnd' : 'oTransitionEnd');
+              var _t = this;
+              if (canTransition()) {
+                var l = function(evt) {
+                  elem.parentNode.removeEventListener(transitionEnd, l, false);
+                  _t._runAutos();
+                };
+                elem.parentNode.addEventListener(transitionEnd, l, false);
+                removeClass(elem, 'to-build');
+              } else {
+                setTimeout(function() {
+                  removeClass(elem, 'to-build');
+                  _t._runAutos();
+                }, 400);
+              }
+            }
+          },
+          buildNext: function() {
+            if (!this._buildList.length) {
+              return false;
+            }
+            removeClass(this._buildList.shift(), 'to-build');
+            return true;
+          },
+        };
+ 
+        //
+        // SlideShow class
+        //
+        var SlideShow = function(slides) {
+          this._slides = (slides || []).map(function(el, idx) {
+            return new Slide(el, idx);
+          });
+          var h = window.location.hash;
+          try {
+            this.current = h;
+          } catch (e) { /* squeltch */ }
+          this.current = (!this.current) ? \"landing-slide\" : this.current.replace('#', '');
+          if (!query('#' + this.current)) {
+            // if this happens is very likely that someone is coming from
+            // a link with the old permalink format, i.e. #slide24
+            alert('The format of the permalinks have recently changed. If you are coming ' +
+                   'here from an old external link it\\'s very likely you will land to the wrong slide');
+            this.current = \"landing-slide\";
+          }
+          var _t = this;
+          doc.addEventListener('keydown', 
+              function(e) { _t.handleKeys(e); }, false);
+          doc.addEventListener('touchstart', 
+              function(e) { _t.handleTouchStart(e); }, false);
+          doc.addEventListener('touchend', 
+              function(e) { _t.handleTouchEnd(e); }, false);
+          window.addEventListener('popstate', 
+              function(e) { if (e.state) { _t.go(e.state); } }, false);
+          query('#left-init-key').addEventListener('click',
+              function() { _t.next(); }, false);
+          this._update();
+        };
+ 
+        SlideShow.prototype = {
+          _presentationCounter: query('#presentation-counter'),
+          _slides: [],
+          _getCurrentIndex: function() {
+            var me = this;
+            var slideCount = null;
+            queryAll('.slide').forEach(function(slide, i) {
+              if (slide.id == me.current) {
+                slideCount = i;
+              }
+            });
+            return slideCount + 1;  
+          },
+          _update: function(dontPush) {
+            // in order to delay the time where the counter shows the slide number we check if 
+            // the slides are already loaded (so we show the loading... instead)
+            // the technique to test visibility is taken from here
+            // http://stackoverflow.com/questions/704758/how-to-check-if-an-element-is-really-visible-with-javascript
+            var docElem = document.documentElement;
+            var elem = document.elementFromPoint( docElem.clientWidth / 2, docElem.clientHeight / 2);
+            var currentIndex = this._getCurrentIndex();
+            if (elem && elem.className != 'presentation') {
+                this._presentationCounter.textContent = currentIndex;
+            }
+            if (history.pushState) {
+              if (!dontPush) {
+                history.replaceState(this.current, 'Slide ' + this.current, '#' + this.current);
+              }
+            } else {
+              window.location.hash = this.current;
+            }
+            for (var x = currentIndex-1; x < currentIndex + 7; x++) {
+              if (this._slides[x-4]) {
+                this._slides[x-4].setState(Math.max(0, x-currentIndex));
+              }
+            }
+          },
+ 
+          current: 0,
+          next: function() {
+            if (!this._slides[this._getCurrentIndex() - 1].buildNext()) {
+              var next = query('#' + this.current + ' + .slide');
+              this.current = (next) ? next.id : this.current;
+              this._update();
+            }
+          },
+          prev: function() {
+            var prev = query('.slide:nth-child(' + (this._getCurrentIndex() - 1) + ')');
+            this.current = (prev) ? prev.id : this.current;
+            this._update();
+          },
+          go: function(slideId) {
+            this.current = slideId;
+            this._update(true);
+          },
+ 
+          _notesOn: false,
+          showNotes: function() {
+            var isOn = this._notesOn = !this._notesOn;
+            queryAll('.notes').forEach(function(el) {
+              el.style.display = (notesOn) ? 'block' : 'none';
+            });
+          },
+          switch3D: function() {
+            toggleClass(document.body, 'three-d');
+          },
+          toggleHightlight: function() {
+            var link = query('#prettify-link');
+            link.disabled = !(link.disabled);
+            sessionStorage['highlightOn'] = !link.disabled;
+          },
+          changeTheme: function() {
+            var linkEls = queryAll('link.theme');
+            var sheetIndex = 0;
+            linkEls.forEach(function(stylesheet, i) {
+              if (!stylesheet.disabled) {
+                sheetIndex = i;
+              }
+            });
+            linkEls[sheetIndex].disabled = true;
+            linkEls[(sheetIndex + 1) % linkEls.length].disabled = false;
+            sessionStorage['theme'] = linkEls[(sheetIndex + 1) % linkEls.length].href;
+          },
+          handleKeys: function(e) {
+            
+            if (/^(input|textarea)$/i.test(e.target.nodeName) || e.target.isContentEditable) {
+              return;
+            }
+            
+            switch (e.keyCode) {
+              case 37: // left arrow
+                this.prev(); break;
+              case 39: // right arrow
+              case 32: // space
+                this.next(); break;
+              case 50: // 2
+                this.showNotes(); break;
+              case 51: // 3
+                this.switch3D(); break;
+              case 72: // H
+                this.toggleHightlight(); break;
+              case 84: // T
+                this.changeTheme(); break;
+            }
+          },
+          _touchStartX: 0,
+          handleTouchStart: function(e) {
+            this._touchStartX = e.touches[0].pageX;
+          },
+          handleTouchEnd: function(e) {
+            var delta = this._touchStartX - e.changedTouches[0].pageX;
+            var SWIPE_SIZE = 150;
+            if (delta > SWIPE_SIZE) {
+              this.next();
+            } else if (delta< -SWIPE_SIZE) {
+              this.prev();
+            }
+          },
+        };
+        
+        // load highlight setting from session storage, if available.
+        // session storage can only store strings so we have to assume type coercion
+        // for the boolean logic here
+        query('#prettify-link').disabled = !(sessionStorage['highlightOn'] == 'true');
+ 
+        // disable style theme stylesheets
+        var linkEls = queryAll('link.theme');
+        var stylesheetPath = sessionStorage['theme'] || 'css/default.css';
+        linkEls.forEach(function(stylesheet) {
+          stylesheet.disabled = !(stylesheet.href.indexOf(stylesheetPath) != -1);
+        });
+        
+        // Initialize
+        var slideshow = new SlideShow(queryAll('.slide'));
+ 
+        document.addEventListener('DOMContentLoaded', function() {
+          query('.slides').style.display = 'block';
+        }, false);
+ 
+        queryAll('pre').forEach(function(el) {
+          addClass(el, 'prettyprint');
+        });
+ 
+      })();
+    </script> 
+")
         (insert "\n</body>\n</html>\n")
 
       (unless (plist-get opt-plist :buffer-will-be-killed)
