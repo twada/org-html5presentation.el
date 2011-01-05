@@ -924,8 +924,14 @@ PUB-DIR is set, use this as the publishing directory."
 
     <title>%s</title>
 
-    <link id=\"prettify-link\" href=\"./prettify.css\" rel=\"stylesheet\" disabled /> 
-    <link type=\"text/css\" href=\"./default.css\" rel=\"stylesheet\">
+    <link id=\"prettify-link\" href=\"./css/prettify.css\" rel=\"stylesheet\" disabled /> 
+
+    <link href=\"css/moon.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"css/sand.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"css/sea_wave.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"css/default.css\" class=\"theme\" rel=\"stylesheet\" media=\"screen\" /> 
+
+    <link type=\"text/css\" href=\"./css/customization.css\" rel=\"stylesheet\">
   </head>
   <body>
     <div class=\"presentation\">
@@ -976,22 +982,6 @@ PUB-DIR is set, use this as the publishing directory."
         (when (plist-get opt-plist :auto-preamble)
           (insert (format "
 <div class=\"slide\" id=\"landing-slide\">
-  <style> 
-    #landing-slide #presentation-title {
-      color: black;
-      letter-spacing: -2px;
-      font-size: 96px;
-    }
-    #landing-slide #presentation-author {
-      margin-top:100px;
-      font-size: 35px;
-      letter-spacing: -1px;
-    }
-    #landing-slide p {
-      font-size: 25px;
-      line-height: 180%%;
-    }
-  </style> 
   <section class=\"middle\"> 
     <h1 id=\"presentation-title\">%s</h1> 
     <h3 id=\"presentation-author\">%s</h3> 
@@ -1000,11 +990,6 @@ PUB-DIR is set, use this as the publishing directory."
 </div>
 
 <div class=\"slide\" id=\"controls-slide\"> 
-  <style> 
-    #controls-slide li, #controls-slide p {
-      font-size: 35px;
-    }
-  </style> 
   <section> 
     <p>Slides controls, press:</p> 
     <ul> 
