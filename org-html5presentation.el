@@ -2723,7 +2723,6 @@ When TITLE is nil, just close all open levels."
                   (if org-export-with-tags
                       (save-match-data
                         (concat
-                         " "
                          (mapconcat
                           (lambda (x)
                             (org-export-html5presentation-get-tag-class-name x)
@@ -2772,14 +2771,17 @@ When TITLE is nil, just close all open levels."
 
         (insert (format "
 <div class=\"slide%s\">
-  <header>
-    <h1>%s</h1>
+  <header class=\"%s\">
+    <h1 class=\"%s\">%s</h1>
   </header>
-  <section>"
+  <section class=\"%s\">"
+                        (if current-tags (concat " " current-tags) "")
+                        (if current-tags current-tags "")
                         (if current-tags current-tags "")
                         ;level
                         title
                         ;level
+                        (if current-tags current-tags "")
                         ))
         (org-open-par)))))
 
@@ -2802,7 +2804,7 @@ Replaces invalid characters with \"_\" and then prepends a prefix."
 (defun org-html5presentation-level-close (level max-outline-level)
   "Terminate one level in HTML export."
   (if (<= level max-outline-level)
-      (insert "</section>\n")
+      (insert "  </section>\n")
     (org-close-li)
     (insert "</ul>\n")))
 
