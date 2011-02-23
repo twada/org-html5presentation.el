@@ -898,7 +898,7 @@ PUB-DIR is set, use this as the publishing directory."
         (insert (format "
 <!DOCTYPE html> 
 <!--
-  Copyright 2010 Google Inc.
+  Copyright 2011 %s.
  
   Licensed under the Apache License, Version 2.0 (the \"License\");
   you may not use this file except in compliance with the License.
@@ -916,6 +916,7 @@ PUB-DIR is set, use this as the publishing directory."
   Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
                  Alex Russell (slightlyoff@chromium.org)
                  Brad Neuberg
+                 Takuto Wada (takuto.wada@gmail.com)
 --> 
 <html>  
   <head> 
@@ -926,17 +927,19 @@ PUB-DIR is set, use this as the publishing directory."
 
     <link id=\"prettify-link\" href=\"./css/prettify.css\" rel=\"stylesheet\" disabled /> 
 
-    <link href=\"css/moon.css\" class=\"theme\" rel=\"stylesheet\" /> 
-    <link href=\"css/sand.css\" class=\"theme\" rel=\"stylesheet\" /> 
-    <link href=\"css/sea_wave.css\" class=\"theme\" rel=\"stylesheet\" /> 
-    <link href=\"css/default.css\" class=\"theme\" rel=\"stylesheet\" media=\"screen\" /> 
+    <link href=\"./css/moon.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"./css/sand.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"./css/sea_wave.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"./css/default.css\" class=\"theme\" rel=\"stylesheet\" media=\"screen\" /> 
 
-    <link type=\"text/css\" href=\"./css/customization.css\" rel=\"stylesheet\">
+    <link href=\"./css/customization.css\" type=\"text/css\" rel=\"stylesheet\">
+
+    <link rel=\"canonical\" href=\"./%s\" />
   </head>
   <body>
     <div class=\"presentation\">
       <div id=\"presentation-counter\">Loading...</div> 
-      <div class=\"slides\">" title))
+      <div class=\"slides\">" author title (file-name-nondirectory filename)))
 ;;         (insert (format
 ;;                  "%s
 ;; <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"
