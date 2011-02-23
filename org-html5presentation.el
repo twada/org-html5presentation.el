@@ -2053,10 +2053,12 @@ PUB-DIR is set, use this as the publishing directory."
             }
             
             switch (e.keyCode) {
+              case 33: // page up
               case 37: // left arrow
                 this.prev(); break;
               case 39: // right arrow
               case 32: // space
+              case 34: // page down
                 this.next(); break;
               case 50: // 2
                 this.showNotes(); break;
