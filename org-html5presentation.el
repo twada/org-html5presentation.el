@@ -29,7 +29,8 @@
 
 ;; About HTML5 presentation, see http://www.html5rocks.com/
 
-;; fork of https://gist.github.com/509761
+;; Modifications: Takuto Wada (takuto.wada@gmail.com)
+;;   fork of https://gist.github.com/509761
 
 ;;; Code:
 
