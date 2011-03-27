@@ -920,14 +920,14 @@ PUB-DIR is set, use this as the publishing directory."
 
     <title>%s</title>
 
-    <link id=\"prettify-link\" href=\"./css/prettify.css\" rel=\"stylesheet\" disabled /> 
+    <link id=\"prettify-link\" href=\"css/prettify.css\" rel=\"stylesheet\" disabled /> 
 
-    <link href=\"./css/moon.css\" class=\"theme\" rel=\"stylesheet\" /> 
-    <link href=\"./css/sand.css\" class=\"theme\" rel=\"stylesheet\" /> 
-    <link href=\"./css/sea_wave.css\" class=\"theme\" rel=\"stylesheet\" /> 
-    <link href=\"./css/default.css\" class=\"theme\" rel=\"stylesheet\" media=\"screen\" /> 
+    <link href=\"css/moon.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"css/sand.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"css/sea_wave.css\" class=\"theme\" rel=\"stylesheet\" /> 
+    <link href=\"css/default.css\" class=\"theme\" rel=\"stylesheet\" media=\"screen\" /> 
 
-    <link href=\"./css/customization.css\" type=\"text/css\" rel=\"stylesheet\">
+    <link href=\"css/customization.css\" type=\"text/css\" rel=\"stylesheet\">
 
     <link rel=\"canonical\" href=\"./%s\" />
   </head>
@@ -2114,6 +2114,7 @@ PUB-DIR is set, use this as the publishing directory."
  
       })();
     </script> 
+    <script src=\"./js/prettify.js\" onload=\"prettyPrint();\" defer=\"\"></script>
 ")
         (insert "\n</body>\n</html>\n")
 
