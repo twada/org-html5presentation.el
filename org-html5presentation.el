@@ -837,6 +837,7 @@ PUB-DIR is set, use this as the publishing directory."
           (org-split-string
            (org-export-preprocess-string
             region
+            :for-backend 'html5presentation
             :emph-multiline t
             :for-html t
             :skip-before-1st-heading
