@@ -1,5 +1,5 @@
-;; -*- coding: utf-8 -*-
 ;;; org-html5presentation.el --- HTML5 Presentation export for Org-mode
+;; -*- coding: utf-8 -*-
 
 ;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010
 ;;   Free Software Foundation, Inc.
