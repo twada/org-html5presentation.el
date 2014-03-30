@@ -100,9 +100,9 @@
   :filters-alist '((:filter-options . org-html5presentation-infojs-install-script)
 		   (:filter-final-output . org-html5presentation-final-function))
   :menu-entry
-  '(?h "Export to HTML"
-       ((?H "As HTML buffer" org-html5presentation-export-as-html)
-	(?h "As HTML file" org-html5presentation-export-to-html)
+  '(?p "Export to HTML5 Presentation"
+       ((?P "As HTML buffer" org-html5presentation-export-as-html)
+	(?p "As HTML file" org-html5presentation-export-to-html)
 	(?o "As HTML file and open"
 	    (lambda (a s v b)
 	      (if a (org-html5presentation-export-to-html t s v b)
