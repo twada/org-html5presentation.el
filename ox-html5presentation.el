@@ -1812,8 +1812,6 @@ holding export options."
        (format org-html5presentation-home/up-format
 	       (or link-up link-home)
 	       (or link-home link-up))))
-   ;; Preamble.
-   (org-html5presentation--build-pre/postamble 'preamble info)
    ;; Document contents.
    (format "<%s id=\"%s\">\n"
 	   (nth 1 (assq 'container org-html5presentation-divs))
@@ -1830,8 +1828,6 @@ holding export options."
 	   (nth 1 (assq 'slides org-html5presentation-divs)))
    (format "</%s>\n"
 	   (nth 1 (assq 'container org-html5presentation-divs)))
-   ;; Postamble.
-   (org-html5presentation--build-pre/postamble 'postamble info)
    ;; JavaScript for IE less than version 9.
    org-html5presentation-ie-lt-9-js
    ;; JavaScript for prettify.js.
