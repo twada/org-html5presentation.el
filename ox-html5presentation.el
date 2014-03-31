@@ -1293,6 +1293,43 @@ or for publication projects using the :html-head-extra property."
 ;;;###autoload
 (put 'org-html5presentation-loading 'safe-local-variable 'stringp)
 
+;;;; template :: JavaScript for IE less than version 9
+(defcustom org-html5presentation-ie-lt-9-js "<!--[if lt IE 9]>
+<script src=\"http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js\">
+</script>
+<script>CFInstall.check({ mode: \"overlay\" });</script>
+<![endif]-->
+"
+  "JavaScript template for IE less than version 9."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+;;;###autoload
+(put 'org-html5presentation-ie-lt-9-js 'safe-local-variable 'stringp)
+
+;;;; template :: prettify.js
+(defcustom org-html5presentation-prettify-js "<script src=\"src/prettify/prettify.js\" onload=\"prettyPrint();\" defer></script>
+"
+  "JavaScript template for prettify.js."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+;;;###autoload
+(put 'org-html5presentation-prettify-js 'safe-local-variable 'stringp)
+
+;;;; template :: util.js
+(defcustom org-html5presentation-util-js "<script src=\"js/utils.js\"></script>
+"
+  "JavaScript template for util.js."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+;;;###autoload
+(put 'org-html5presentation-util-js 'safe-local-variable 'stringp)
+
 ;;;; Todos
 
 (defcustom org-html5presentation-todo-kwd-class-prefix ""
@@ -1783,7 +1820,7 @@ holding export options."
    (format "<%s id=\"%s\">\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs))
 	   (nth 2 (assq 'slides org-html5presentation-divs)))
-   ;; <div id="presentation-counter">Loading...</div>
+   ;; Loading message
    org-html5presentation-loading
    contents
    (format "</%s>\n"
@@ -1792,6 +1829,12 @@ holding export options."
 	   (nth 1 (assq 'container org-html5presentation-divs)))
    ;; Postamble.
    (org-html5presentation--build-pre/postamble 'postamble info)
+   ;; JavaScript for IE less than version 9.
+   org-html5presentation-ie-lt-9-js
+   ;; JavaScript for prettify.js.
+   org-html5presentation-prettify-js
+   ;; JavaScript for util.js.
+   org-html5presentation-util-js
    ;; Closing document.
    "</body>\n</html>"))
 
