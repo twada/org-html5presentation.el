@@ -126,7 +126,6 @@
     (:html-postamble nil "html-postamble" org-html5presentation-postamble)
     (:html-preamble nil "html-preamble" org-html5presentation-preamble)
     (:html-head-include-default-style nil "html-style" org-html5presentation-head-include-default-style)
-    (:html-head-include-scripts nil "html-scripts" org-html5presentation-head-include-scripts)
     (:html-table-attributes nil nil org-html5presentation-table-default-attributes)
     (:html-table-row-tags nil nil org-html5presentation-table-row-tags)
     (:html-xml-declaration nil nil org-html5presentation-xml-declaration)
@@ -1568,7 +1567,7 @@ INFO is a plist used as a communication channel."
 			  (format " rel=\"stylesheet\" href=\"%s\" type=\"text/css\""
 				  (plist-get info :html-htmlized-css-url))
 			  info))
-    (when (plist-get info :html-head-include-scripts) org-html5presentation-scripts))))
+    )))
 
 (defun org-html5presentation--build-mathjax-config (info)
   "Insert the user setup into the mathjax template.
