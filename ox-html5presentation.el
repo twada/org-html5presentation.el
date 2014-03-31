@@ -1590,6 +1590,8 @@ INFO is a plist used as a communication channel."
      (when (plist-get info :time-stamp-file)
        (format-time-string
 	 (concat "<!-- " org-html5presentation-metadata-timestamp-format " -->\n")))
+     (org-html5presentation-close-tag
+      "meta" " http-equiv=\"X-UA-Compatible\" content=\"IE=Edge;chrome=1\"" info) "\n"
      (format
       (if (org-html5presentation-html5-p info)
 	  (org-html5presentation-close-tag "meta" " charset=\"%s\"" info)
