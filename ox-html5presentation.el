@@ -1714,7 +1714,8 @@ holding export options."
    ;; Helpers
    org-html5presentation-helpers
    ;; Table of contents.
-   (let ((depth (plist-get info :with-toc)))
+   ;; FIXME: below should be responsive to toc.
+   (let ((depth nil))
      (when depth (org-html5presentation-toc depth info)))
    ;; Document contents.
    contents
