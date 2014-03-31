@@ -1284,7 +1284,8 @@ or for publication projects using the :html-head-extra property."
 (put 'org-html5presentation-helpers 'safe-local-variable 'stringp)
 
 ;;;; template :: Loading
-(defcustom org-html5presentation-loading "<div id=\"presentation-counter\">Loading...</div>"
+(defcustom org-html5presentation-loading "<div id=\"presentation-counter\">Loading...</div>
+"
   "Loading message which is shown when contents are loading."
   :group 'org-export-html5presentation
   :version "24.4"
@@ -1764,6 +1765,8 @@ holding export options."
    ;; FIXME: below should be responsive to toc.
    (let ((depth nil))
      (when depth (org-html5presentation-toc depth info)))
+   ;; Title slide.
+   (org-html5presentation-title-slide info)
    ;; Document contents.
    contents
    ;; Footnotes section.
@@ -1817,7 +1820,7 @@ holding export options."
 	   (nth 2 (assq 'container org-html5presentation-divs)))
    ;; Helpers
    org-html5presentation-helpers
-   (format "<%s id=\"%s\">\n"
+   (format "<%s class=\"%s\">\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs))
 	   (nth 2 (assq 'slides org-html5presentation-divs)))
    ;; Loading message
@@ -2163,6 +2166,58 @@ of tables as a string, or nil if it is empty."
 		      "</li>")))
 		 lol-entries "\n"))
 	      "\n</ul>\n</div>\n</div>"))))
+
+
+;;; Title slide
+(defun org-html5presentation-title-slide (info)
+  ""
+  (let ((title (plist-get ginfo :title))
+	(subtitle ""))
+    (format "<div class=\"slide title-slide\" id=\"landing-slide\">
+<section class=\"middle\">
+<hgroup>
+<h1>%s</h1>
+<h2>%s</h2>
+</hgroup>
+<p>Press <span id=\"left-init-key\" class=\"key\">&rarr;</span> key to advance.</p>
+%s
+</section>
+</div>
+"
+	    title
+	    subtitle
+	    (let ((spec (org-html5presentation-format-spec ginfo)))
+	      (let ((date (cdr (assq ?d spec)))
+		    (author (cdr (assq ?a spec)))
+		    (email (cdr (assq ?e spec)))
+		    (creator (cdr (assq ?c spec)))
+		    (timestamp (cdr (assq ?T spec)))
+		    (validation-link (cdr (assq ?v spec))))
+		(concat
+		 (when (and (plist-get ginfo :with-date)
+			    (org-string-nw-p date))
+		   (format "<p class=\"date\">%s: %s</p>\n"
+			   (org-html5presentation--translate "Date" ginfo)
+			   date))
+		 (when (and (plist-get ginfo :with-author)
+			    (org-string-nw-p author))
+		   (format "<p class=\"author\">%s: %s</p>\n"
+			   (org-html5presentation--translate "Author" ginfo)
+			   author))
+		 (when (and (plist-get ginfo :with-email)
+			    (org-string-nw-p email))
+		   (format "<p class=\"email\">%s: %s</p>\n"
+			   (org-html5presentation--translate "Email" ginfo)
+			   email))
+		 (when (plist-get ginfo :time-stamp-file)
+		   (format
+		    "<p class=\"date\">%s: %s</p>\n"
+		    (org-html5presentation--translate "Created" ginfo)
+		    (format-time-string org-html5presentation-metadata-timestamp-format)))
+		 (when (plist-get ginfo :with-creator)
+		   (format "<p class=\"creator\">%s</p>\n" creator))
+		 (format "<p class=\"validation\">%s</p>\n"
+			 validation-link)))))))
 
 
 ;;; Transcode Functions
