@@ -1261,6 +1261,26 @@ or for publication projects using the :html-head-extra property."
 ;;;###autoload
 (put 'org-html5presentation-head-extra 'safe-local-variable 'stringp)
 
+;;;; template :: Helpers
+(defcustom org-html5presentation-helpers "<nav id=\"helpers\">
+<button title=\"Previous slide\" id=\"nav-prev\" class=\"nav-prev\">&#8701;</button>
+<button title=\"Jump to a random slide\" id=\"slide-no\">5</button>
+<button title=\"Next slide\" id=\"nav-next\" class=\"nav-next\">&#8702;</button>
+<menu>
+<button type=\"checkbox\" data-command=\"toc\" title=\"Table of Contents\" class=\"toc\">TOC</button>
+<!-- <button type=\"checkbox\" data-command=\"resources\" title=\"View Related Resources\">&#9734;</button> -->
+<button type=\"checkbox\" data-command=\"notes\" title=\"View Slide Notes\">&#9999;</button>
+<button type=\"checkbox\" data-command=\"source\" title=\"View slide source\">&#8635;</button>
+<button type=\"checkbox\" data-command=\"help\" title=\"View Help\">?</button>
+</menu>
+</nav>
+"
+  "A Help section describes usage of the HTML5 Presentation slides."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
 ;;;; Todos
 
 (defcustom org-html5presentation-todo-kwd-class-prefix ""
@@ -1691,6 +1711,8 @@ communication channel."
 CONTENTS is the transcoded contents string.  INFO is a plist
 holding export options."
   (concat
+   ;; Helpers
+   org-html5presentation-helpers
    ;; Table of contents.
    (let ((depth (plist-get info :with-toc)))
      (when depth (org-html5presentation-toc depth info)))
