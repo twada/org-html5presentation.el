@@ -2401,10 +2401,8 @@ holding contextual information."
 		(format "outline-container-%s"
 			(or (org-element-property :CUSTOM_ID headline)
 			    (concat "sec-" section-number)))
-		(concat (format "outline-%d" level1) (and extra-class " ")
-			extra-class)
-		(format "\n<h%d id=\"%s\">%s%s</h%d>\n"
-			level1
+		"slide"
+		(format "\n<header id=\"%s\">%s%s</header>\n"
 			preferred-id
 			(mapconcat
 			 (lambda (x)
@@ -2413,8 +2411,7 @@ holding contextual information."
 					x))))
 			     (org-html5presentation--anchor id)))
 			 extra-ids "")
-			full-text
-			level1)
+			full-text)
 		;; When there is no section, pretend there is an empty
 		;; one to get the correct <div class="outline- ...>
 		;; which is needed by `org-info.js'.
@@ -3071,18 +3068,9 @@ holding contextual information."
   (let ((parent (org-export-get-parent-headline section)))
     ;; Before first headline: no container, just return CONTENTS.
     (if (not parent) contents
-      ;; Get div's class and id references.
-      (let* ((class-num (+ (org-export-get-relative-level parent info)
-			   (1- org-html5presentation-toplevel-hlevel)))
-	     (section-number
-	      (mapconcat
-	       'number-to-string
-	       (org-export-get-headline-number parent info) "-")))
-        ;; Build return value.
-	(format "<div class=\"outline-text-%d\" id=\"text-%s\">\n%s</div>"
-		class-num
-		(or (org-element-property :CUSTOM_ID parent) section-number)
-		contents)))))
+      ;; Build return value.
+      (format "<section>\n%s</section>"
+	      contents))))
 
 ;;;; Radio Target
 
