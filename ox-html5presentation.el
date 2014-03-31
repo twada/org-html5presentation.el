@@ -1748,9 +1748,6 @@ holding export options."
    (format "<%s id=\"%s\">\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs))
 	   (nth 2 (assq 'slides org-html5presentation-divs)))
-   ;; Document title.
-   (let ((title (plist-get info :title)))
-     (format "<h1 class=\"title\">%s</h1>\n" (org-export-data (or title "") info)))
    contents
    (format "</%s>\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs)))
