@@ -1275,11 +1275,23 @@ or for publication projects using the :html-head-extra property."
 </menu>
 </nav>
 "
-  "A Help section describes usage of the HTML5 Presentation slides."
+  "Help section describes usage of the HTML5 Presentation slides."
   :group 'org-export-html5presentation
   :version "24.4"
   :package-version '(Org . "8.0")
   :type 'string)
+;;;###autoload
+(put 'org-html5presentation-helpers 'safe-local-variable 'stringp)
+
+;;;; template :: Loading
+(defcustom org-html5presentation-loading "<div id=\"presentation-counter\">Loading...</div>"
+  "Loading message which is shown when contents are loading."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+;;;###autoload
+(put 'org-html5presentation-loading 'safe-local-variable 'stringp)
 
 ;;;; Todos
 
@@ -1711,8 +1723,6 @@ communication channel."
 CONTENTS is the transcoded contents string.  INFO is a plist
 holding export options."
   (concat
-   ;; Helpers
-   org-html5presentation-helpers
    ;; Table of contents.
    ;; FIXME: below should be responsive to toc.
    (let ((depth nil))
@@ -1768,9 +1778,13 @@ holding export options."
    (format "<%s id=\"%s\">\n"
 	   (nth 1 (assq 'container org-html5presentation-divs))
 	   (nth 2 (assq 'container org-html5presentation-divs)))
+   ;; Helpers
+   org-html5presentation-helpers
    (format "<%s id=\"%s\">\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs))
 	   (nth 2 (assq 'slides org-html5presentation-divs)))
+   ;; <div id="presentation-counter">Loading...</div>
+   org-html5presentation-loading
    contents
    (format "</%s>\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs)))
