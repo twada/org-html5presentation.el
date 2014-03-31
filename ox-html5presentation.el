@@ -883,7 +883,8 @@ org-info.js for your website."
 
 (defcustom org-html5presentation-divs
   '((preamble  "div" "preamble")
-    (content   "div" "content")
+    (container "div" "flex-container")
+    (slides    "div" "slides")
     (postamble "div" "postamble"))
   "Alist of the three section elements for HTML export.
 The car of each entry is one of 'preamble, 'content or 'postamble.
@@ -1742,14 +1743,19 @@ holding export options."
    (org-html5presentation--build-pre/postamble 'preamble info)
    ;; Document contents.
    (format "<%s id=\"%s\">\n"
-	   (nth 1 (assq 'content org-html5presentation-divs))
-	   (nth 2 (assq 'content org-html5presentation-divs)))
+	   (nth 1 (assq 'container org-html5presentation-divs))
+	   (nth 2 (assq 'container org-html5presentation-divs)))
+   (format "<%s id=\"%s\">\n"
+	   (nth 1 (assq 'slides org-html5presentation-divs))
+	   (nth 2 (assq 'slides org-html5presentation-divs)))
    ;; Document title.
    (let ((title (plist-get info :title)))
      (format "<h1 class=\"title\">%s</h1>\n" (org-export-data (or title "") info)))
    contents
    (format "</%s>\n"
-	   (nth 1 (assq 'content org-html5presentation-divs)))
+	   (nth 1 (assq 'slides org-html5presentation-divs)))
+   (format "</%s>\n"
+	   (nth 1 (assq 'container org-html5presentation-divs)))
    ;; Postamble.
    (org-html5presentation--build-pre/postamble 'postamble info)
    ;; Closing document.
