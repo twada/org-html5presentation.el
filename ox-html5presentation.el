@@ -2167,7 +2167,7 @@ of tables as a string, or nil if it is empty."
 ;;; Title slide
 (defun org-html5presentation-title-slide (info)
   ""
-  (let ((title (plist-get ginfo :title))
+  (let ((title (plist-get info :title))
 	(subtitle ""))
     (format "<div class=\"slide title-slide\" id=\"landing-slide\">
 <section class=\"middle\">
@@ -2182,7 +2182,7 @@ of tables as a string, or nil if it is empty."
 "
 	    title
 	    subtitle
-	    (let ((spec (org-html5presentation-format-spec ginfo)))
+	    (let ((spec (org-html5presentation-format-spec info)))
 	      (let ((date (cdr (assq ?d spec)))
 		    (author (cdr (assq ?a spec)))
 		    (email (cdr (assq ?e spec)))
@@ -2190,27 +2190,27 @@ of tables as a string, or nil if it is empty."
 		    (timestamp (cdr (assq ?T spec)))
 		    (validation-link (cdr (assq ?v spec))))
 		(concat
-		 (when (and (plist-get ginfo :with-date)
+		 (when (and (plist-get info :with-date)
 			    (org-string-nw-p date))
 		   (format "<p class=\"date\">%s: %s</p>\n"
-			   (org-html5presentation--translate "Date" ginfo)
+			   (org-html5presentation--translate "Date" info)
 			   date))
-		 (when (and (plist-get ginfo :with-author)
+		 (when (and (plist-get info :with-author)
 			    (org-string-nw-p author))
 		   (format "<p class=\"author\">%s: %s</p>\n"
-			   (org-html5presentation--translate "Author" ginfo)
+			   (org-html5presentation--translate "Author" info)
 			   author))
-		 (when (and (plist-get ginfo :with-email)
+		 (when (and (plist-get info :with-email)
 			    (org-string-nw-p email))
 		   (format "<p class=\"email\">%s: %s</p>\n"
-			   (org-html5presentation--translate "Email" ginfo)
+			   (org-html5presentation--translate "Email" info)
 			   email))
-		 (when (plist-get ginfo :time-stamp-file)
+		 (when (plist-get info :time-stamp-file)
 		   (format
 		    "<p class=\"date\">%s: %s</p>\n"
-		    (org-html5presentation--translate "Created" ginfo)
+		    (org-html5presentation--translate "Created" info)
 		    (format-time-string org-html5presentation-metadata-timestamp-format)))
-		 (when (plist-get ginfo :with-creator)
+		 (when (plist-get info :with-creator)
 		   (format "<p class=\"creator\">%s</p>\n" creator))
 		 (format "<p class=\"validation\">%s</p>\n"
 			 validation-link)))))))
