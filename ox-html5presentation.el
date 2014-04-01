@@ -2215,7 +2215,7 @@ of tables as a string, or nil if it is empty."
 ;;; Title slide
 (defun org-html5presentation-title-slide (info)
   ""
-  (let ((title (plist-get info :title))
+  (let ((title (org-export-data (plist-get info :title) info))
 	(subtitle ""))
     (format "<div class=\"slide title-slide\" id=\"landing-slide\">
 <section class=\"middle\">
