@@ -46,7 +46,7 @@
 
 ;;; Define Back-End
 
-(org-export-define-backend 'html
+(org-export-define-backend 'html5presentation
   '((bold . org-html5presentation-bold)
     (center-block . org-html5presentation-center-block)
     (clock . org-html5presentation-clock)
@@ -3534,7 +3534,7 @@ Export is done in a buffer named \"*Org HTML Export*\", which
 will be displayed when `org-export-show-temporary-export-buffer'
 is non-nil."
   (interactive)
-  (org-export-to-buffer 'html "*Org HTML Export*"
+  (org-export-to-buffer 'html5presentation "*Org HTML Export*"
     async subtreep visible-only body-only ext-plist
     (lambda () (set-auto-mode t))))
 
@@ -3545,7 +3545,7 @@ This can be used in any buffer.  For example, you can write an
 itemized list in org-mode syntax in an HTML buffer and use this
 command to convert it."
   (interactive)
-  (org-export-replace-region-by 'html))
+  (org-export-replace-region-by 'html5presentation))
 
 ;;;###autoload
 (defun org-html5presentation-export-to-html
@@ -3580,7 +3580,7 @@ Return output file's name."
   (let* ((extension (concat "." org-html5presentation-extension))
 	 (file (org-export-output-file-name extension subtreep))
 	 (org-export-coding-system org-html5presentation-coding-system))
-    (org-export-to-file 'html file
+    (org-export-to-file 'html5presentation file
       async subtreep visible-only body-only ext-plist)))
 
 ;;;###autoload
@@ -3592,7 +3592,7 @@ is the property list for the given project.  PUB-DIR is the
 publishing directory.
 
 Return output file name."
-  (org-publish-org-to 'html filename
+  (org-publish-org-to 'html5presentation filename
 		      (concat "." (or (plist-get plist :html-extension)
 				      org-html5presentation-extension "html"))
 		      plist pub-dir))
