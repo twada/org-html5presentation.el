@@ -1294,6 +1294,51 @@ or for publication projects using the :html-head-extra property."
 ;;;###autoload
 (put 'org-html5presentation-loading 'safe-local-variable 'stringp)
 
+;;;; template :: Help
+(defcustom org-html5presentation-help "<aside id=\"help\" class=\"sidebar invisible\" style=\"display: none;\">
+<table>
+<caption>Help</caption>
+<tbody>
+<tr>
+<th>Move Around</th>
+<td>&larr;&nbsp;&rarr;</td>
+</tr>
+<tr>
+<th>Source File</th>
+<td>s</td>
+</tr>
+<tr>
+<th>Change Theme</th>
+<td>t</td>
+</tr>
+<tr>
+<th>Syntax Highlight</th>
+<td>h</td>
+</tr>
+<tr>
+<th>Speaker Notes</th>
+<td>n</td>
+</tr>
+<tr>
+<th>Toggle 3D</th>
+<td>3</td>
+</tr>
+<tr>
+<th>Help</th>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</aside>
+"
+  "Help template."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+;;;###autoload
+(put 'org-html5presentation-help 'safe-local-variable 'stringp)
+
 ;;;; template :: JavaScript for IE less than version 9
 (defcustom org-html5presentation-ie-lt-9-js "<!--[if lt IE 9]>
 <script src=\"http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js\">
@@ -1824,6 +1869,8 @@ holding export options."
    ;; Loading message
    org-html5presentation-loading
    contents
+   ;; Help
+   org-html5presentation-help
    (format "</%s>\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs)))
    (format "</%s>\n"
