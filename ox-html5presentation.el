@@ -1861,16 +1861,16 @@ holding export options."
    (format "<%s id=\"%s\">\n"
 	   (nth 1 (assq 'container org-html5presentation-divs))
 	   (nth 2 (assq 'container org-html5presentation-divs)))
-   ;; Navi
+   ;; Navi.
    org-html5presentation-navi
    (format "<%s class=\"%s\">\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs))
 	   (nth 2 (assq 'slides org-html5presentation-divs)))
-   ;; Loading message
+   ;; Loading message.
    org-html5presentation-loading
    ;; Contents.
    contents
-   ;; Help
+   ;; Help.
    org-html5presentation-help
    (format "</%s>\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs)))
