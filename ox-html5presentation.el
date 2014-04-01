@@ -1267,10 +1267,10 @@ or for publication projects using the :html-head-extra property."
 <button title=\"Jump to a random slide\" id=\"slide-no\">5</button>
 <button title=\"Next slide\" id=\"nav-next\" class=\"nav-next\">&#8702;</button>
 <menu>
-<button type=\"checkbox\" data-command=\"toc\" title=\"Table of Contents\" class=\"toc\">TOC</button>
+<!-- <button type=\"checkbox\" data-command=\"toc\" title=\"Table of Contents\" class=\"toc\">TOC</button> -->
 <!-- <button type=\"checkbox\" data-command=\"resources\" title=\"View Related Resources\">&#9734;</button> -->
-<button type=\"checkbox\" data-command=\"notes\" title=\"View Slide Notes\">&#9999;</button>
-<button type=\"checkbox\" data-command=\"source\" title=\"View slide source\">&#8635;</button>
+<!-- <button type=\"checkbox\" data-command=\"notes\" title=\"View Slide Notes\">&#9999;</button> -->
+<!-- <button type=\"checkbox\" data-command=\"source\" title=\"View slide source\">&#8635;</button> -->
 <button type=\"checkbox\" data-command=\"help\" title=\"View Help\">?</button>
 </menu>
 </nav>
@@ -1806,10 +1806,6 @@ communication channel."
 CONTENTS is the transcoded contents string.  INFO is a plist
 holding export options."
   (concat
-   ;; Table of contents.
-   ;; FIXME: below should be responsive to toc.
-   (let ((depth nil))
-     (when depth (org-html5presentation-toc depth info)))
    ;; Title slide.
    (org-html5presentation-title-slide info)
    ;; Document contents.
@@ -1818,9 +1814,8 @@ holding export options."
      ;; To prevent nested sections, couple of div tags are being reversed.
      ;; So, `</div>' tag will be at the head.
      (if (string-match "^<\/div>" contents)
-	 (substring contents (match-end 0)))) "</div>"
-	 ;; Footnotes section.
-   (org-html5presentation-footnote-section info)))
+	 (substring contents (match-end 0))))
+   "</div>"))
 
 (defun org-html5presentation-template (contents info)
   "Return complete document string after HTML conversion.
