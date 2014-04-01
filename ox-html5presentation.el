@@ -230,14 +230,14 @@ for the JavaScript code in this tag.
   "Basic JavaScript that is needed by HTML files produced by Org mode.")
 
 (defconst org-html5presentation-style-default
-  "<link id=\"prettify-link\" href=\"src/prettify/prettify.css\" rel=\"stylesheet\" disabled />
-<link href=\"styles/fonts.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link href=\"styles/presentation.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link href=\"styles/common.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link class=\"theme\" href=\"styles/default.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link class=\"theme\" href=\"styles/moon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link class=\"theme\" href=\"styles/sand.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
-<link class=\"theme\" href=\"styles/sea_wave.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
+  "<link id=\"prettify-link\" href=\"http://slides.html5rocks.com/src/prettify/prettify.css\" rel=\"stylesheet\" disabled />
+<link href=\"http://slides.html5rocks.com/styles/fonts.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link href=\"http://slides.html5rocks.com/styles/presentation.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link href=\"http://slides.html5rocks.com/styles/common.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/default.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/moon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/sand.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
+<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/sea_wave.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
 "
   "The default style specification for exported HTML files.
 You can use `org-html5presentation-head' and `org-html5presentation-head-extra' to add to
