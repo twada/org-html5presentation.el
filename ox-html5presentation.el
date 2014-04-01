@@ -1813,8 +1813,13 @@ holding export options."
    ;; Title slide.
    (org-html5presentation-title-slide info)
    ;; Document contents.
-   contents
-   ;; Footnotes section.
+   (save-match-data 
+     ;; Remove first `</div>' contained in `contents'.
+     ;; To prevent nested sections, couple of div tags are being reversed.
+     ;; So, `</div>' tag will be at the head.
+     (if (string-match "^<\/div>" contents)
+	 (substring contents (match-end 0)))) "</div>"
+	 ;; Footnotes section.
    (org-html5presentation-footnote-section info)))
 
 (defun org-html5presentation-template (contents info)
@@ -1868,6 +1873,7 @@ holding export options."
 	   (nth 2 (assq 'slides org-html5presentation-divs)))
    ;; Loading message
    org-html5presentation-loading
+   ;; Contents.
    contents
    ;; Help
    org-html5presentation-help
@@ -2494,7 +2500,8 @@ holding contextual information."
 	     (extra-class (org-element-property :HTML_CONTAINER_CLASS headline))
 	     (level1 (+ level (1- org-html5presentation-toplevel-hlevel)))
 	     (first-content (car (org-element-contents headline))))
-	(format "<%s id=\"%s\" class=\"%s\">%s%s</%s>\n"
+	(format "</%s>\n<%s id=\"%s\" class=\"%s\">%s%s"
+		(org-html5presentation--container headline info)
 		(org-html5presentation--container headline info)
 		(format "outline-container-%s"
 			(or (org-element-property :CUSTOM_ID headline)
@@ -2516,8 +2523,7 @@ holding contextual information."
 		(if (not (eq (org-element-type first-content) 'section))
 		    (concat (org-html5presentation-section first-content "" info)
 			    contents)
-		  contents)
-		(org-html5presentation--container headline info)))))))
+		  contents)))))))
 
 (defun org-html5presentation--container (headline info)
   (or (org-element-property :HTML_CONTAINER headline)
