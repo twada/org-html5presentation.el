@@ -1261,8 +1261,8 @@ or for publication projects using the :html-head-extra property."
 ;;;###autoload
 (put 'org-html5presentation-head-extra 'safe-local-variable 'stringp)
 
-;;;; template :: Helpers
-(defcustom org-html5presentation-helpers "<nav id=\"helpers\">
+;;;; template :: Navi
+(defcustom org-html5presentation-navi "<nav id=\"helpers\">
 <button title=\"Previous slide\" id=\"nav-prev\" class=\"nav-prev\">&#8701;</button>
 <button title=\"Jump to a random slide\" id=\"slide-no\">5</button>
 <button title=\"Next slide\" id=\"nav-next\" class=\"nav-next\">&#8702;</button>
@@ -1281,7 +1281,7 @@ or for publication projects using the :html-head-extra property."
   :package-version '(Org . "8.0")
   :type 'string)
 ;;;###autoload
-(put 'org-html5presentation-helpers 'safe-local-variable 'stringp)
+(put 'org-html5presentation-navi 'safe-local-variable 'stringp)
 
 ;;;; template :: Loading
 (defcustom org-html5presentation-loading "<div id=\"presentation-counter\">Loading...</div>
@@ -1816,8 +1816,8 @@ holding export options."
    (format "<%s id=\"%s\">\n"
 	   (nth 1 (assq 'container org-html5presentation-divs))
 	   (nth 2 (assq 'container org-html5presentation-divs)))
-   ;; Helpers
-   org-html5presentation-helpers
+   ;; Navi
+   org-html5presentation-navi
    (format "<%s class=\"%s\">\n"
 	   (nth 1 (assq 'slides org-html5presentation-divs))
 	   (nth 2 (assq 'slides org-html5presentation-divs)))
