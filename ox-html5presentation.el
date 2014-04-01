@@ -230,8 +230,7 @@ for the JavaScript code in this tag.
   "Basic JavaScript that is needed by HTML files produced by Org mode.")
 
 (defconst org-html5presentation-style-default
-  "<link href=\"http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono\" rel=\"stylesheet\" type=\"text/css\" />
-<link id=\"prettify-link\" href=\"src/prettify/prettify.css\" rel=\"stylesheet\" disabled />
+  "<link id=\"prettify-link\" href=\"src/prettify/prettify.css\" rel=\"stylesheet\" disabled />
 <link href=\"styles/fonts.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
 <link href=\"styles/presentation.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
 <link href=\"styles/common.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
