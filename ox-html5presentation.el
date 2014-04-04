@@ -1,30 +1,36 @@
-;;; ox-html5presentation.el --- HTML Back-End for Org Export Engine
+;;; ox-html5presentation.el --- HTML5 Presentation Back-End for Org Export Engine
 
-;; Copyright (C) 2011-2014 Free Software Foundation, Inc.
+;; Copyright (C) 2014 Takumi Kinjo.
 
-;; Author: Carsten Dominik <carsten at orgmode dot org>
-;;      Jambunathan K <kjambunathan at gmail dot com>
+;; Author: Takumi KINJO <takumi dot kinjo at gmail dot org>
+;; URL: https://github.com/kinjo/org-html5presentation.el
+;; Version: 0.1
 ;; Keywords: outlines, hypermedia, calendar, wp
 
-;; This file is part of GNU Emacs.
+;; This file is not part of GNU Emacs.
 
-;; GNU Emacs is free software: you can redistribute it and/or modify
+;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 
-;; GNU Emacs is distributed in the hope that it will be useful,
+;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; This library implements a HTML back-end for Org generic exporter.
-;; See Org manual for more information.
+;; This library implements a HTML5 Presentation back-end for Org 
+;; generic exporter. This library is based on ox-html.el.
+
+;; About HTML5 presentation, see http://slides.html5rocks.com.
+
+;; Original author: Carsten Dominik <carsten at orgmode dot org>
+;;      Jambunathan K <kjambunathan at gmail dot com>
 
 ;;; Code:
 
@@ -708,9 +714,4 @@ Return output file name."
 
 
 (provide 'ox-html5presentation)
-
-;; Local variables:
-;; generated-autoload-file: "org-loaddefs.el"
-;; End:
-
 ;;; ox-html5presentation.el ends here
