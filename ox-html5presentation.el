@@ -168,29 +168,16 @@ publishing, with :html-doctype."
 	 '((string :tag "Custom doctype" ))))
 
 (defcustom org-html5presentation-divs
-  '((preamble  "div" "preamble")
-    (container "div" "flex-container")
-    (slides    "div" "slides")
-    (postamble "div" "postamble"))
-  "Alist of the three section elements for HTML export.
-The car of each entry is one of 'preamble, 'content or 'postamble.
-The cdrs of each entry are the ELEMENT_TYPE and ID for each
-section of the exported document.
-
-Note that changing the default will prevent you from using
-org-info.js for your website."
+  '((container "div" "flex-container")
+    (slides    "div" "slides"))
+  "Alist of the section elements for HTML export."
   :group 'org-export-html
   :version "24.4"
   :package-version '(Org . "8.0")
   :type '(list :greedy t
-	       (list :tag "Preamble"
-		     (const :format "" preamble)
-		     (string :tag "element") (string :tag "     id"))
 	       (list :tag "Content"
 		     (const :format "" content)
-		     (string :tag "element") (string :tag "     id"))
-	       (list :tag "Postamble" (const :format "" postamble)
-		     (string :tag "     id") (string :tag "element"))))
+		     (string :tag "element") (string :tag "     id"))))
 
 ;;;; template :: Navi
 (defcustom org-html5presentation-navi "<nav id=\"helpers\">
