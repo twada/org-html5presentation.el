@@ -136,7 +136,15 @@
     (:html-table-row-tags nil nil org-html-table-row-tags)
     (:html-xml-declaration nil nil org-html-xml-declaration)
     (:html-inline-images nil nil org-html-inline-images)
-    (:with-latex nil "tex" org-html-with-latex)))
+    (:with-latex nil "tex" org-html-with-latex)
+    (:prettify-css "PRETTIFY_CSS" nil org-html5presentation-prettify-css)
+    (:fonts-css "FONTS_CSS" nil org-html5presentation-fonts-css)
+    (:presentation-css "PRESENTATION_CSS" nil org-html5presentation-presentation-css)
+    (:common-css "COMMON_CSS" nil org-html5presentation-common-css)
+    (:default-css "DEFAULT_CSS" nil org-html5presentation-default-css)
+    (:moon-css "MOON_CSS" nil org-html5presentation-moon-css)
+    (:sand-css "SAND_CSS" nil org-html5presentation-sand-css)
+    (:sea-wave-css "SEA_WAVE_CSS" nil org-html5presentation-sea-wave-css)))
 
 
 ;;; Internal Variables
@@ -184,6 +192,62 @@ publishing, with :html-doctype."
 	       (list :tag "Content"
 		     (const :format "" content)
 		     (string :tag "element") (string :tag "     id"))))
+
+(defcustom org-html5presentation-prettify-css "resources/styles/prettify.css"
+  "Default URL of prettify.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-fonts-css "resources/styles/fonts.css"
+  "Default URL of fonts.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-presentation-css "resources/styles/presentation.css"
+  "Default URL of presentation.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-common-css "resources/styles/common.css"
+  "Default URL of common.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-default-css "resources/styles/default.css"
+  "Default URL of default.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-moon-css "resources/styles/moon.css"
+  "Default URL of moon.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-sand-css "resources/styles/sand.css"
+  "Default URL of sand.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-sea-wave-css "css resources/styles/sea_wave.css"
+  "Default URL of sea_wave.css."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
 
 ;;;; template :: Navi
 (defcustom org-html5presentation-navi "<nav id=\"helpers\">
@@ -365,13 +429,33 @@ INFO is a plist used as a communication channel."
 			       info)
 	   "\n")))))
 
+(defun org-html5presentation-style-template (info)
+  "Return string of styles. INFO is a plist holding export options."
+  (format "<link id=\"prettify-link\" href=\"%s\" rel=\"stylesheet\" disabled />
+<link href=\"%s\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link href=\"%s\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link href=\"%s\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"%s\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"%s\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"%s\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
+<link class=\"theme\" href=\"%s\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
+"
+	  (plist-get info :prettify-css)
+	  (plist-get info :fonts-css)
+	  (plist-get info :presentation-css)
+	  (plist-get info :common-css)
+	  (plist-get info :default-css)
+	  (plist-get info :moon-css)
+	  (plist-get info :sand-css)
+	  (plist-get info :sea-wave-css)))
+
 (defun org-html5presentation--build-head (info)
   "Return information for the <head>..</head> of the HTML output.
 INFO is a plist used as a communication channel."
   (org-element-normalize-string
    (concat
     (when (plist-get info :html-head-include-default-style)
-      (org-element-normalize-string org-html5presentation-style-default))
+      (org-element-normalize-string (org-html5presentation-style-template info)))
     (org-element-normalize-string (plist-get info :html-head))
     (org-element-normalize-string (plist-get info :html-head-extra))
     (when (and (plist-get info :html-htmlized-css-url)
