@@ -142,14 +142,14 @@
 ;;; Internal Variables
 
 (defconst org-html5presentation-style-default
-  "<link id=\"prettify-link\" href=\"http://slides.html5rocks.com/src/prettify/prettify.css\" rel=\"stylesheet\" disabled />
-<link href=\"http://slides.html5rocks.com/styles/fonts.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link href=\"http://slides.html5rocks.com/styles/presentation.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link href=\"http://slides.html5rocks.com/styles/common.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/default.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/moon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/sand.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
-<link class=\"theme\" href=\"http://slides.html5rocks.com/styles/sea_wave.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
+  "<link id=\"prettify-link\" href=\"resources/styles/prettify.css\" rel=\"stylesheet\" disabled />
+<link href=\"resources/styles/fonts.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link href=\"resources/styles/presentation.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link href=\"resources/styles/common.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"resources/styles/default.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"resources/styles/moon.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+<link class=\"theme\" href=\"resources/styles/sand.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
+<link class=\"theme\" href=\"resources/styles/sea_wave.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\"/>
 "
   "The default style specification for exported HTML files.
 You can use `org-html-head' and `org-html-head-extra' to add to
@@ -279,7 +279,7 @@ publishing, with :html-doctype."
 (put 'org-html5presentation-ie-lt-9-js 'safe-local-variable 'stringp)
 
 ;;;; template :: prettify.js
-(defcustom org-html5presentation-prettify-js "<script src=\"http://slides.html5rocks.com/src/prettify/prettify.js\" onload=\"prettyPrint();\" defer></script>
+(defcustom org-html5presentation-prettify-js "<script src=\"resources/js/prettify.js\" onload=\"prettyPrint();\" defer></script>
 "
   "JavaScript template for prettify.js."
   :group 'org-export-html5presentation
@@ -290,7 +290,7 @@ publishing, with :html-doctype."
 (put 'org-html5presentation-prettify-js 'safe-local-variable 'stringp)
 
 ;;;; template :: util.js
-(defcustom org-html5presentation-util-js "<script src=\"http://slides.html5rocks.com/js/utils.js\"></script>
+(defcustom org-html5presentation-util-js "<script src=\"resources/js/utils.js\"></script>
 "
   "JavaScript template for util.js."
   :group 'org-export-html5presentation
