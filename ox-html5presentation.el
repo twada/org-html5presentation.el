@@ -273,7 +273,7 @@ publishing, with :html-doctype."
 (put 'org-html5presentation-ie-lt-9-js 'safe-local-variable 'stringp)
 
 ;;;; template :: prettify.js
-(defcustom org-html5presentation-prettify-js "<script src=\"src/prettify/prettify.js\" onload=\"prettyPrint();\" defer></script>
+(defcustom org-html5presentation-prettify-js "<script src=\"http://slides.html5rocks.com/src/prettify/prettify.js\" onload=\"prettyPrint();\" defer></script>
 "
   "JavaScript template for prettify.js."
   :group 'org-export-html5presentation
@@ -284,7 +284,7 @@ publishing, with :html-doctype."
 (put 'org-html5presentation-prettify-js 'safe-local-variable 'stringp)
 
 ;;;; template :: util.js
-(defcustom org-html5presentation-util-js "<script src=\"js/utils.js\"></script>
+(defcustom org-html5presentation-util-js "<script src=\"http://slides.html5rocks.com/js/utils.js\"></script>
 "
   "JavaScript template for util.js."
   :group 'org-export-html5presentation
