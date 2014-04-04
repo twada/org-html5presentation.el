@@ -165,7 +165,7 @@ customize `org-html-head-include-default-style'.")
   "Document type definition to use for exported HTML files.
 Can be set with the in-buffer HTML_DOCTYPE property or for
 publishing, with :html-doctype."
-  :group 'org-export-html
+  :group 'org-export-html5presentation
   :version "24.4"
   :package-version '(Org . "8.0")
   :type (append
@@ -177,7 +177,7 @@ publishing, with :html-doctype."
   '((container "div" "flex-container")
     (slides    "div" "slides"))
   "Alist of the section elements for HTML export."
-  :group 'org-export-html
+  :group 'org-export-html5presentation
   :version "24.4"
   :package-version '(Org . "8.0")
   :type '(list :greedy t
