@@ -295,17 +295,6 @@ publishing, with :html-doctype."
 (put 'org-html5presentation-util-js 'safe-local-variable 'stringp)
 
 
-;;; Internal Functions
-
-(defun org-html5presentation-doctype (info)
-  "Return correct html doctype tag from `org-html5presentation-doctype-alist',
-or the literal value of :html-doctype from INFO if :html-doctype
-is not found in the alist.
-INFO is a plist used as a communication channel."
-  (let ((dt (plist-get info :html-doctype)))
-    (or (cdr (assoc dt org-html-doctype-alist)) dt)))
-
-
 ;;; Template
 
 (defun org-html5presentation--build-meta-info (info)
@@ -423,7 +412,7 @@ holding export options."
 			   (fboundp 'coding-system-get)
 			   (coding-system-get org-html-coding-system 'mime-charset))
 		      "iso-8859-1"))))))
-   (org-html5presentation-doctype info)
+   (org-html-doctype info)
    "\n"
    (concat "<html"
 	   (when (org-html-xhtml-p info)
