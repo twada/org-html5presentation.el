@@ -144,7 +144,10 @@
     (:default-css "DEFAULT_CSS" nil org-html5presentation-default-css)
     (:moon-css "MOON_CSS" nil org-html5presentation-moon-css)
     (:sand-css "SAND_CSS" nil org-html5presentation-sand-css)
-    (:sea-wave-css "SEA_WAVE_CSS" nil org-html5presentation-sea-wave-css)))
+    (:sea-wave-css "SEA_WAVE_CSS" nil org-html5presentation-sea-wave-css)
+    (:ie-lt-9-js "IE_LT_9_JS" nil org-html5presentation-ie-lt-9-js)
+    (:prettify-js "PRETTIFY_JS" nil org-html5presentation-prettify-css)
+    (:utils-js "UTILS_JS" nil org-html5presentation-utils-js)))
 
 
 ;;; Internal Variables
@@ -249,6 +252,27 @@ publishing, with :html-doctype."
   :package-version '(Org . "8.0")
   :type 'string)
 
+(defcustom org-html5presentation-ie-lt-9-js "http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"
+  "Default URL of CFInstall.min.js."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-prettify-js "resources/js/prettify.js"
+  "Default URL of prettify.js."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
+(defcustom org-html5presentation-utils-js "resources/js/utils.js"
+  "Default URL of utils.js."
+  :group 'org-export-html5presentation
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'string)
+
 ;;;; template :: Navi
 (defcustom org-html5presentation-navi "<nav id=\"helpers\">
 <button title=\"Previous slide\" id=\"nav-prev\" class=\"nav-prev\">&#8701;</button>
@@ -326,43 +350,6 @@ publishing, with :html-doctype."
   :type 'string)
 ;;;###autoload
 (put 'org-html5presentation-help 'safe-local-variable 'stringp)
-
-;;;; template :: JavaScript for IE less than version 9
-(defcustom org-html5presentation-ie-lt-9-js "<!--[if lt IE 9]>
-<script src=\"http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js\">
-</script>
-<script>CFInstall.check({ mode: \"overlay\" });</script>
-<![endif]-->
-"
-  "JavaScript template for IE less than version 9."
-  :group 'org-export-html5presentation
-  :version "24.4"
-  :package-version '(Org . "8.0")
-  :type 'string)
-;;;###autoload
-(put 'org-html5presentation-ie-lt-9-js 'safe-local-variable 'stringp)
-
-;;;; template :: prettify.js
-(defcustom org-html5presentation-prettify-js "<script src=\"resources/js/prettify.js\" onload=\"prettyPrint();\" defer></script>
-"
-  "JavaScript template for prettify.js."
-  :group 'org-export-html5presentation
-  :version "24.4"
-  :package-version '(Org . "8.0")
-  :type 'string)
-;;;###autoload
-(put 'org-html5presentation-prettify-js 'safe-local-variable 'stringp)
-
-;;;; template :: util.js
-(defcustom org-html5presentation-util-js "<script src=\"resources/js/utils.js\"></script>
-"
-  "JavaScript template for util.js."
-  :group 'org-export-html5presentation
-  :version "24.4"
-  :package-version '(Org . "8.0")
-  :type 'string)
-;;;###autoload
-(put 'org-html5presentation-util-js 'safe-local-variable 'stringp)
 
 
 ;;; Template
@@ -448,6 +435,25 @@ INFO is a plist used as a communication channel."
 	  (plist-get info :moon-css)
 	  (plist-get info :sand-css)
 	  (plist-get info :sea-wave-css)))
+
+(defun org-html5presentation-ie-lt-9-js (info)
+  "Return JavaScript string for IE version less than 9."
+  (format "<!--[if lt IE 9]>
+<script src=\"%s\">
+</script>
+<script>CFInstall.check({ mode: \"overlay\" });</script>
+<![endif]-->\n"
+	  (plist-get info :ie-lt-9-js)))
+
+(defun org-html5presentation-prettify-js (info)
+  "Return string of prettify.js. INFO is a plist used as a communication channel."
+  (format "<script src=\"%s\" onload=\"prettyPrint();\" defer></script>\n"
+	  (plist-get info :prettify-js)))
+
+(defun org-html5presentation-utils-js (info)
+  "Return string of utils.js. INFO is a plist used as a communication channel."
+  (format "<script src=\"%s\"></script>\n"
+	  (plist-get info :utils-js)))
 
 (defun org-html5presentation--build-head (info)
   "Return information for the <head>..</head> of the HTML output.
@@ -593,11 +599,11 @@ holding export options."
    (format "</%s>\n"
 	   (nth 1 (assq 'container org-html5presentation-divs)))
    ;; JavaScript for IE less than version 9.
-   org-html5presentation-ie-lt-9-js
+   (org-html5presentation-ie-lt-9-js info)
    ;; JavaScript for prettify.js.
-   org-html5presentation-prettify-js
+   (org-html5presentation-prettify-js info)
    ;; JavaScript for util.js.
-   org-html5presentation-util-js
+   (org-html5presentation-utils-js info)
    ;; Closing document.
    "</body>\n</html>"))
 
