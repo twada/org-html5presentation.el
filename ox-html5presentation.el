@@ -376,18 +376,69 @@ INFO is a plist used as a communication channel."
 			  info))
     )))
 
+(defun org-html5presentation-title-slide-template (info)
+  "Return document string of the title slide. INFO is a plist
+holding export options."
+  (let ((title (org-export-data (plist-get info :title) info))
+	(subtitle ""))
+    (format "<div class=\"slide title-slide\" id=\"landing-slide\">
+<section class=\"middle\">
+<hgroup>
+<h1>%s</h1>
+<h2>%s</h2>
+</hgroup>
+<p>Press <span id=\"left-init-key\" class=\"key\">&rarr;</span> key to advance.</p>
+%s
+</section>
+</div>
+"
+	    title
+	    subtitle
+	    (let ((spec (org-html-format-spec info)))
+	      (let ((date (cdr (assq ?d spec)))
+		    (author (cdr (assq ?a spec)))
+		    (email (cdr (assq ?e spec)))
+		    (creator (cdr (assq ?c spec)))
+		    (timestamp (cdr (assq ?T spec)))
+		    (validation-link (cdr (assq ?v spec))))
+		(concat
+		 (when (and (plist-get info :with-date)
+			    (org-string-nw-p date))
+		   (format "<p class=\"date\">%s: %s</p>\n"
+			   (org-html--translate "Date" info)
+			   date))
+		 (when (and (plist-get info :with-author)
+			    (org-string-nw-p author))
+		   (format "<p class=\"author\">%s: %s</p>\n"
+			   (org-html--translate "Author" info)
+			   author))
+		 (when (and (plist-get info :with-email)
+			    (org-string-nw-p email))
+		   (format "<p class=\"email\">%s: %s</p>\n"
+			   (org-html--translate "Email" info)
+			   email))
+		 (when (plist-get info :time-stamp-file)
+		   (format
+		    "<p class=\"date\">%s: %s</p>\n"
+		    (org-html--translate "Created" info)
+		    (format-time-string org-html-metadata-timestamp-format)))
+		 (when (plist-get info :with-creator)
+		   (format "<p class=\"creator\">%s</p>\n" creator))
+		 (format "<p class=\"validation\">%s</p>\n"
+			 validation-link)))))))
+
 (defun org-html5presentation-inner-template (contents info)
   "Return body of document string after HTML conversion.
 CONTENTS is the transcoded contents string.  INFO is a plist
 holding export options."
   (concat
    ;; Title slide.
-   (org-html5presentation-title-slide info)
+   (org-html5presentation-title-slide-template info)
    ;; Document contents.
    (save-match-data 
-     ;; Remove first `</div>' contained in `contents'.
+     ;; Remove first `</div>' tag contained in contents string.
      ;; To prevent nested sections, couple of div tags are being reversed.
-     ;; So, `</div>' tag will be at the head.
+     ;; Thus, `</div>' tag will be at the head of document string.
      (if (string-match "^<\/div>" contents)
 	 (substring contents (match-end 0))))
    "</div>"))
@@ -459,58 +510,6 @@ holding export options."
    org-html5presentation-util-js
    ;; Closing document.
    "</body>\n</html>"))
-
-
-;;; Title slide
-(defun org-html5presentation-title-slide (info)
-  ""
-  (let ((title (org-export-data (plist-get info :title) info))
-	(subtitle ""))
-    (format "<div class=\"slide title-slide\" id=\"landing-slide\">
-<section class=\"middle\">
-<hgroup>
-<h1>%s</h1>
-<h2>%s</h2>
-</hgroup>
-<p>Press <span id=\"left-init-key\" class=\"key\">&rarr;</span> key to advance.</p>
-%s
-</section>
-</div>
-"
-	    title
-	    subtitle
-	    (let ((spec (org-html-format-spec info)))
-	      (let ((date (cdr (assq ?d spec)))
-		    (author (cdr (assq ?a spec)))
-		    (email (cdr (assq ?e spec)))
-		    (creator (cdr (assq ?c spec)))
-		    (timestamp (cdr (assq ?T spec)))
-		    (validation-link (cdr (assq ?v spec))))
-		(concat
-		 (when (and (plist-get info :with-date)
-			    (org-string-nw-p date))
-		   (format "<p class=\"date\">%s: %s</p>\n"
-			   (org-html--translate "Date" info)
-			   date))
-		 (when (and (plist-get info :with-author)
-			    (org-string-nw-p author))
-		   (format "<p class=\"author\">%s: %s</p>\n"
-			   (org-html--translate "Author" info)
-			   author))
-		 (when (and (plist-get info :with-email)
-			    (org-string-nw-p email))
-		   (format "<p class=\"email\">%s: %s</p>\n"
-			   (org-html--translate "Email" info)
-			   email))
-		 (when (plist-get info :time-stamp-file)
-		   (format
-		    "<p class=\"date\">%s: %s</p>\n"
-		    (org-html--translate "Created" info)
-		    (format-time-string org-html-metadata-timestamp-format)))
-		 (when (plist-get info :with-creator)
-		   (format "<p class=\"creator\">%s</p>\n" creator))
-		 (format "<p class=\"validation\">%s</p>\n"
-			 validation-link)))))))
 
 
 ;;; Transcode Functions
