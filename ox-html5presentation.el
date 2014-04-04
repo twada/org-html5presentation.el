@@ -24,8 +24,8 @@
 
 ;;; Commentary:
 
-;; This library implements a HTML5 Presentation back-end for Org 
-;; generic exporter. This library is based on ox-html.el.
+;; This library implements a HTML5 Presentation back-end for Org
+;; generic exporter based on ox-html.el.
 
 ;; About HTML5 presentation, see http://slides.html5rocks.com.
 
@@ -146,7 +146,7 @@
     (:sand-css "SAND_CSS" nil org-html5presentation-sand-css)
     (:sea-wave-css "SEA_WAVE_CSS" nil org-html5presentation-sea-wave-css)
     (:ie-lt-9-js "IE_LT_9_JS" nil org-html5presentation-ie-lt-9-js)
-    (:prettify-js "PRETTIFY_JS" nil org-html5presentation-prettify-css)
+    (:prettify-js "PRETTIFY_JS" nil org-html5presentation-prettify-js)
     (:utils-js "UTILS_JS" nil org-html5presentation-utils-js)))
 
 
