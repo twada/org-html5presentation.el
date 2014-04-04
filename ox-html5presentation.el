@@ -204,7 +204,7 @@ publishing, with :html-doctype."
 ;;;; template :: Loading
 (defcustom org-html5presentation-loading "<div id=\"presentation-counter\">Loading...</div>
 "
-  "Loading message which is shown when contents are loading."
+  "Loading message will be shown when contents are loading."
   :group 'org-export-html5presentation
   :version "24.4"
   :package-version '(Org . "8.0")
