@@ -316,20 +316,12 @@ publishing, with :html-doctype."
 <td>&larr;&nbsp;&rarr;</td>
 </tr>
 <tr>
-<th>Source File</th>
-<td>s</td>
-</tr>
-<tr>
 <th>Change Theme</th>
 <td>t</td>
 </tr>
 <tr>
 <th>Syntax Highlight</th>
 <td>h</td>
-</tr>
-<tr>
-<th>Speaker Notes</th>
-<td>n</td>
 </tr>
 <tr>
 <th>Toggle 3D</th>
