@@ -1,0 +1,67 @@
+#+TITLE: org-html5presentation.el
+#+AUTHOR: Takumi kinjo
+#+OPTIONS: ^:nil num:nil
+
+* org-html5presentation.el
+
+  This library implements a HTML5 Presentation back-end for Org
+  generic exporter based on ox-html.el.
+
+  * See http://orgmode.org/ about Org-mode.
+
+  * See http://slides.html5rocks.com about HTML5 Presentation.
+
+  This requires Org-mode version 8.2.5h and GNU Emacs 24 or higher.
+
+* INSTALLATION
+
+  First of all, check your Org-mode version.
+
+  Note: This library has been tested on Org-mode 8.2.5h.
+
+  : M-x org-version
+
+  Get org-html5presentation.el. For example,
+
+  : git clone https://github.com/kinjo/org-html5presentation.el.git \
+  : ~/org-html5presentation.el
+
+  Add following to ~/.emacs.d/init.el and reboot emacs.
+
+  : (add-to-list 'load-path "~/org-html5presentation.el")
+  : (require 'ox-html5presentation)
+
+* USAGE
+
+  Open this README.org in your emacs.
+
+  To convert to an HTML5 Presentation file, type C-c C-e.
+
+  `*Org Export Dispatcher*' buffer will open, so follow the menu.
+
+  For example, if you type `p' and then `p', README.html will be generated.
+
+  Finally, Open the generated file in your Google Chrome.
+
+* PROPERTIES for CSS
+
+  Following PROPERTIES are available for CSSs.
+
+  * PRETTIFY_CSS : "resources/styles/prettify.css" is default. org-html5presentation-prettify-css defines.
+  * FONTS_CSS : "resources/styles/fonts.css" is default. org-html5presentation-fonts-css defines.
+  * PRESENTATION_CSS : "resources/styles/presentation.css" is default. org-html5presentation-presentation-css defines.
+  * COMMON_CSS : "resources/styles/common.css" is default. org-html5presentation-common-css defines.
+  * DEFAULT_CSS : "resources/styles/default.css" is default. org-html5presentation-default-css defines.
+  * MOON_CSS : "resources/styles/moon.css" is default. org-html5presentation-moon-css defines.
+  * SAND_CSS : "resources/styles/sand.css" is default. org-html5presentation-sand-css defines.
+  * SEA_WAVE_CSS : "css resources/styles/sea_wave.css" is default. org-html5presentation-sea-wave-css defines.
+
+* PROPERTIES for JS
+
+  * IE_LT_9_JS : "http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js" is default. org-html5presentation-ie-lt-9-js defines.
+  * PRETTIFY_JS : "resources/js/prettify.js" is default. org-html5presentation-prettify-js defines.
+  * UTILS_JS : "resources/js/utils.js" is default. org-html5presentation-utils-js defines.
+
+* LICENSE
+
+  Licensed under the GPLv3 license.
