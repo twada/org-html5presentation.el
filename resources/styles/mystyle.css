@@ -1,0 +1,29 @@
+#landing-slide hgroup {
+  margin-bottom:80px;
+}
+
+#landing-slide h1 {
+  font-size:50px
+}
+
+#landing-slide p {
+  font-size:24px;
+  line-height:32px;
+}
+
+.slide p {
+  font-size:24px;
+  line-height:38px;
+}
+
+.slide ul li {
+  list-style-type:disc;
+  font-size:18px;
+  line-height:30px;
+}
+
+.slide ol li {
+  list-style-type:decimal;
+  font-size:18px;
+  line-height:30px;
+}
