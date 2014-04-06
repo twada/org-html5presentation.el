@@ -1,47 +1,58 @@
 #+TITLE: org-html5presentation.el
 #+AUTHOR: Takumi kinjo
 #+OPTIONS: ^:nil num:nil
-
+#+PRETTIFY_CSS:     http://kinjo.github.io/org-html5presentation.el/resources/styles/prettify.css
+#+FONTS_CSS:        http://kinjo.github.io/org-html5presentation.el/resources/styles/fonts.css
+#+PRESENTATION_CSS: http://kinjo.github.io/org-html5presentation.el/resources/styles/presentation.css
+#+COMMON_CSS:       http://kinjo.github.io/org-html5presentation.el/resources/styles/common.css
+#+DEFAULT_CSS:      http://kinjo.github.io/org-html5presentation.el/resources/styles/default.css
+#+MOON_CSS:         http://kinjo.github.io/org-html5presentation.el/resources/styles/moon.css
+#+SAND_CSS:         http://kinjo.github.io/org-html5presentation.el/resources/styles/sand.css
+#+SEA_WAVE_CSS:     http://kinjo.github.io/org-html5presentation.el/resources/styles/sea_wave.css
+#+IE_LT_9_JS:       http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js
+#+PRETTIFY_JS:      http://kinjo.github.io/org-html5presentation.el/resources/js/prettify.js
+#+UTILS_JS:         http://kinjo.github.io/org-html5presentation.el/resources/js/utils.js
+#+HTML_HEAD:        <link rel="stylesheet" href="http://kinjo.github.io/org-html5presentation.el/resources/styles/mystyle.css" type="text/css" />
 * org-html5presentation.el
 
   This library implements a HTML5 Presentation back-end for Org
   generic exporter based on ox-html.el.
 
+  http://kinjo.github.io/org-html5presentation.el/ is a demo page.
+  Please use the latest version of Google Chrome.
+
   * See http://orgmode.org/ about Org-mode.
 
   * See http://slides.html5rocks.com about HTML5 Presentation.
 
-  This requires Org-mode version 8.2.5h and GNU Emacs 24 or higher.
+  This requires *Org-mode version 8.2.5h* and *GNU Emacs 24 or higher*.
 
 * INSTALLATION
 
-  First of all, check your Org-mode version.
+  1) First of all, check your Org-mode version.
 
-  Note: This library has been tested on Org-mode 8.2.5h.
+  2) Note: This library has been tested on Org-mode 8.2.5h.
+     : M-x org-version
 
-  : M-x org-version
+  3) Get org-html5presentation.el. For example,
+    : git clone https://github.com/kinjo/org-html5presentation.el.git \
+    : ~/org-html5presentation.el
 
-  Get org-html5presentation.el. For example,
-
-  : git clone https://github.com/kinjo/org-html5presentation.el.git \
-  : ~/org-html5presentation.el
-
-  Add following to ~/.emacs.d/init.el and reboot emacs.
-
-  : (add-to-list 'load-path "~/org-html5presentation.el")
-  : (require 'ox-html5presentation)
+  4) Add following to ~/.emacs.d/init.el and reboot emacs.
+    : (add-to-list 'load-path "~/org-html5presentation.el")
+    : (require 'ox-html5presentation)
 
 * USAGE
 
-  Open this README.org in your emacs.
+  1. Open this README.org in your emacs.
 
-  To convert to an HTML5 Presentation file, type C-c C-e.
+  2. Type C-c C-e to convert Org file to an HTML5 Presentation file.
 
-  `*Org Export Dispatcher*' buffer will open, so follow the menu.
+  3. `*Org Export Dispatcher*' buffer will open, so follow the menu.
 
-  For example, if you type `p' and then `p', README.html will be generated.
+  4. For example, if you type `p' and then `p', README.html will be generated.
 
-  Finally, Open the generated file in your Google Chrome.
+  5. Finally, Open the generated file in your Google Chrome.
 
 * PROPERTIES for CSS
 
