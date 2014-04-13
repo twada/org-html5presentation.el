@@ -66,7 +66,7 @@
     (fixed-width . org-html-fixed-width)
     (footnote-definition . org-html-footnote-definition)
     (footnote-reference . org-html-footnote-reference)
-    (headline . org-html-headline)
+    (headline . org-html5presentation-headline)
     (horizontal-rule . org-html-horizontal-rule)
     (inline-src-block . org-html-inline-src-block)
     (inlinetask . org-html-inlinetask)
@@ -604,7 +604,7 @@ holding export options."
 
 ;;;; Headline
 
-(defun org-html-headline (headline contents info)
+(defun org-html5presentation-headline (headline contents info)
   "Transcode a HEADLINE element from Org to HTML.
 CONTENTS holds the contents of the headline.  INFO is a plist
 holding contextual information."
