@@ -30,8 +30,7 @@
 * INSTALLATION
 
   1) First of all, check your Org-mode version.
-
-  2) Note: This library has been tested on Org-mode 8.2.6.
+     This library has been tested on Org-mode 8.2.6.
      : M-x org-version
 
   3) Get org-html5presentation.el. For example,
