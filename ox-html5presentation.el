@@ -522,6 +522,9 @@ holding export options."
   (concat
    ;; Title slide.
    (org-html5presentation-title-slide-template info)
+   ;; Table of contents.
+   (let ((depth (plist-get info :with-toc)))
+     (when depth (org-html5presentation-toc depth info)))
    ;; Document contents.
    (save-match-data 
      ;; Remove first `</div>' tag contained in contents string.
@@ -599,6 +602,23 @@ holding export options."
    ;; Closing document.
    "</body>\n</html>"))
 
+
+
+;;; Tables of Contents
+
+(defun org-html5presentation-toc (depth info)
+  "Build a table of contents.
+DEPTH is an integer specifying the depth of the table.  INFO is a
+plist used as a communication channel.  Return the table of
+contents as a string, or nil if it is empty."
+  (concat "<div class=\"slide\" id=\"table-of-contents\">\n"
+	  (format "<header>%s</header>\n"
+		  (org-html--translate "Table of Contents" info))
+	  "<section>"
+	  "<ul id=\"toc-list\"></ul>"
+	  "</section>\n"
+	  "</div>\n"))
+
 
 ;;; Transcode Functions
 
@@ -664,7 +684,7 @@ holding contextual information."
 		(format "outline-container-%s"
 			(or (org-element-property :CUSTOM_ID headline)
 			    (concat "sec-" section-number)))
-		"slide"
+		"slide transitionSlide"
 		(format "\n<header id=\"%s\">%s%s</header>\n"
 			preferred-id
 			(mapconcat
