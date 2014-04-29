@@ -78,13 +78,13 @@
     (latex-fragment . org-html-latex-fragment)
     (line-break . org-html-line-break)
     (link . org-html-link)
-    (node-property . org-html-node-property)
     (paragraph . org-html-paragraph)
     (plain-list . org-html-plain-list)
     (plain-text . org-html-plain-text)
     (planning . org-html-planning)
     (property-drawer . org-html-property-drawer)
     (quote-block . org-html-quote-block)
+    (quote-section . org-html-quote-section)
     (radio-target . org-html-radio-target)
     (section . org-html5presentation-section)
     (special-block . org-html-special-block)
@@ -114,28 +114,28 @@
 	      (if a (org-html5presentation-export-to-html t s v b)
 		(org-open-file (org-html5presentation-export-to-html nil s v b)))))))
   :options-alist
-  '((:creator "CREATOR" nil org-html-creator-string)
-    (:html-doctype "HTML_DOCTYPE" nil org-html5presentation-doctype)
-    (:html-link-home "HTML_LINK_HOME" nil org-html-link-home)
-    (:html-link-up "HTML_LINK_UP" nil org-html-link-up)
-    (:html-head "HTML_HEAD" nil org-html-head newline)
-    (:html-head-extra "HTML_HEAD_EXTRA" nil org-html-head-extra newline)
-    (:html-container "HTML_CONTAINER" nil org-html-container-element)
-    (:html-mathjax "HTML_MATHJAX" nil "" space)
-    (:infojs-opt "INFOJS_OPT" nil nil)
-    ;; Retrieve LaTeX header for fragments.
-    (:latex-header "LATEX_HEADER" nil nil newline)
-    (:html-extension nil nil org-html-extension)
+  '((:html-extension nil nil org-html-extension)
     (:html-link-org-as-html nil nil org-html-link-org-files-as-html)
+    (:html-doctype "HTML_DOCTYPE" nil org-html5presentation-doctype)
+    (:html-container "HTML_CONTAINER" nil org-html-container-element)
     (:html-html5-fancy nil "html5-fancy" org-html-html5-fancy)
     (:html-link-use-abs-url nil "html-link-use-abs-url" org-html-link-use-abs-url)
+    (:html-link-home "HTML_LINK_HOME" nil org-html-link-home)
+    (:html-link-up "HTML_LINK_UP" nil org-html-link-up)
+    (:html-mathjax "HTML_MATHJAX" nil "" space)
     (:html-postamble nil "html-postamble" org-html-postamble)
     (:html-preamble nil "html-preamble" org-html-preamble)
+    (:html-head "HTML_HEAD" nil org-html-head newline)
+    (:html-head-extra "HTML_HEAD_EXTRA" nil org-html-head-extra newline)
     (:html-head-include-default-style nil "html-style" org-html-head-include-default-style)
+    (:html-head-include-scripts nil "html-scripts" org-html-head-include-scripts)
     (:html-table-attributes nil nil org-html-table-default-attributes)
     (:html-table-row-tags nil nil org-html-table-row-tags)
     (:html-xml-declaration nil nil org-html-xml-declaration)
     (:html-inline-images nil nil org-html-inline-images)
+    (:infojs-opt "INFOJS_OPT" nil nil)
+    ;; Redefine regular options.
+    (:creator "CREATOR" nil org-html-creator-string)
     (:with-latex nil "tex" org-html-with-latex)
     (:prettify-css "PRETTIFY_CSS" nil org-html5presentation-prettify-css)
     (:fonts-css "FONTS_CSS" nil org-html5presentation-fonts-css)
@@ -147,7 +147,9 @@
     (:sea-wave-css "SEA_WAVE_CSS" nil org-html5presentation-sea-wave-css)
     (:ie-lt-9-js "IE_LT_9_JS" nil org-html5presentation-ie-lt-9-js)
     (:prettify-js "PRETTIFY_JS" nil org-html5presentation-prettify-js)
-    (:utils-js "UTILS_JS" nil org-html5presentation-utils-js)))
+    (:utils-js "UTILS_JS" nil org-html5presentation-utils-js)
+    ;; Retrieve LaTeX header for fragments.
+    (:latex-header "LATEX_HEADER" nil nil newline)))
 
 
 ;;; Internal Variables
@@ -179,10 +181,7 @@ publishing, with :html-doctype."
   :group 'org-export-html5presentation
   :version "24.4"
   :package-version '(Org . "8.0")
-  :type (append
-	 '(choice)
-	 (mapcar (lambda (x) `(const ,(car x))) org-html-doctype-alist)
-	 '((string :tag "Custom doctype" ))))
+  :type 'string)
 
 (defcustom org-html5presentation-divs
   '((container "div" "flex-container")

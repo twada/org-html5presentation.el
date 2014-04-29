@@ -25,7 +25,7 @@
 
   * See http://slides.html5rocks.com about HTML5 Presentation.
 
-  This requires *Org-mode version 8.2.5h* and *GNU Emacs 24 or higher*.
+  This requires *Org-mode version 8.2.6* and *GNU Emacs 24 or higher*.
 
 * INSTALLATION
 
