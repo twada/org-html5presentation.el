@@ -244,7 +244,7 @@ publishing, with :html-doctype."
   :package-version '(Org . "8.0")
   :type 'string)
 
-(defcustom org-html5presentation-sea-wave-css "css resources/styles/sea_wave.css"
+(defcustom org-html5presentation-sea-wave-css "resources/styles/sea_wave.css"
   "Default URL of sea_wave.css."
   :group 'org-export-html5presentation
   :version "24.4"
