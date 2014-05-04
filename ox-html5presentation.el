@@ -610,13 +610,66 @@ holding export options."
 DEPTH is an integer specifying the depth of the table.  INFO is a
 plist used as a communication channel.  Return the table of
 contents as a string, or nil if it is empty."
-  (concat "<div class=\"slide\" id=\"table-of-contents\">\n"
-	  (format "<header>%s</header>\n"
-		  (org-html--translate "Table of Contents" info))
-	  "<section>"
-	  "<ul id=\"toc-list\"></ul>"
-	  "</section>\n"
-	  "</div>\n"))
+  (let ((toc-entries
+	 (mapcar (lambda (headline)
+		   (cons (org-html5presentation--format-toc-headline headline info)
+			 (org-export-get-relative-level headline info)))
+		 (org-export-collect-headlines info depth)))
+	(outer-tag (if (and (org-html-html5-p info)
+			    (plist-get info :html-html5-fancy))
+		       "nav"
+		     "div")))
+    (when toc-entries
+      (concat (format "<%s class=\"slide\" id=\"table-of-contents\">\n" outer-tag)
+	      (format "<header>%s</header>\n"
+		      (org-html--translate "Table of Contents" info))
+	      "<section id=\"toc-list\">"
+	      (org-html--toc-text toc-entries)
+	      "</section>\n"
+	      (format "</%s>\n" outer-tag)))))
+
+(defun org-html5presentation--format-toc-headline (headline info)
+  "Return an appropriate table of contents entry for HEADLINE.
+INFO is a plist used as a communication channel."
+  (let* ((headline-number (org-export-get-headline-number headline info))
+	 (todo (and (plist-get info :with-todo-keywords)
+		    (let ((todo (org-element-property :todo-keyword headline)))
+		      (and todo (org-export-data todo info)))))
+	 (todo-type (and todo (org-element-property :todo-type headline)))
+	 (priority (and (plist-get info :with-priority)
+			(org-element-property :priority headline)))
+	 (text (org-export-data-with-backend
+		(org-export-get-alt-title headline info)
+		;; Create an anonymous back-end that will ignore any
+		;; footnote-reference, link, radio-target and target
+		;; in table of contents.
+		(org-export-create-backend
+		 :parent 'html
+		 :transcoders '((footnote-reference . ignore)
+				(link . (lambda (object c i) c))
+				(radio-target . (lambda (object c i) c))
+				(target . ignore)))
+		info))
+	 (tags (and (eq (plist-get info :with-tags) t)
+		    (org-export-get-tags headline info))))
+    (format "<a data-hash=\"%s\">%s</a>"
+	    ;; Label.
+	    (org-export-solidify-link-text
+	     (or (org-element-property :CUSTOM_ID headline)
+		 (concat "outline-container-sec-"
+			 (mapconcat #'number-to-string headline-number "-"))))
+	    ;; Body.
+	    (concat
+	     (and (not (org-export-low-level-p headline info))
+		  (org-export-numbered-headline-p headline info)
+		  (concat (mapconcat #'number-to-string headline-number ".")
+			  ". "))
+	     (apply (if (not (eq org-html-format-headline-function 'ignore))
+			(lambda (todo todo-type priority text tags &rest ignore)
+			  (funcall org-html-format-headline-function
+				   todo todo-type priority text tags))
+		      #'org-html-format-headline)
+		    todo todo-type priority text tags :section-number nil)))))
 
 
 ;;; Transcode Functions

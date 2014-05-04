@@ -27,3 +27,13 @@
   font-size:18px;
   line-height:30px;
 }
+
+#toc-list li {
+  font-size:26px;
+  line-height:33px;
+  opacity:0.85;
+}
+
+#toc-list ul {
+  margin-top:10px;
+}

@@ -536,15 +536,6 @@ if (!Function.prototype.bind) {
     stylesheet.disabled = !(stylesheet.href.indexOf(stylesheetPath) != -1);
   });
         
-  // Initialize
-  var li_array = [];
-  var transitionSlides = queryAll('.transitionSlide').forEach(function(el) {
-    li_array.push( ['<li><a data-hash="', el.id, '">',
-                    query('header', el).textContent, '</a>',
-                    '</li>'].join('')
-                 );
-  });
-
   var slideshow = new SlideShow(queryAll('.slide'));
   
   document.addEventListener('DOMContentLoaded', function() {
@@ -553,7 +544,6 @@ if (!Function.prototype.bind) {
 
   var toc_list = query('#toc-list');
   if (toc_list) {
-    toc_list.innerHTML = li_array.join('');
     queryAll('li a', toc_list).forEach(function(el) {
       el.onclick = function() {
           slideshow.go(el.dataset['hash']);
