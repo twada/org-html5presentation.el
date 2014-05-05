@@ -1,5 +1,16 @@
-org-html5presentation.el --- HTML5 Presentation export for Org-mode
+org-html5presentation.el
 ================================
+
+HTML5 Presentation export for Org-mode
+
+
+NOTICE
+---------------------------------------
+Unfortunately, this module is not maintained actively now.
+
+If you are searching for active one, see @kinjo's (He is also the author of original gist!).
+
+https://github.com/kinjo/org-html5presentation.el
 
 
 DESCRIPTION
