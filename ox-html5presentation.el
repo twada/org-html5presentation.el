@@ -463,6 +463,13 @@ INFO is a plist used as a communication channel."
 			  info))
     )))
 
+(defun org-html5presentation--build-author (author)
+  "Return string of author(s). 
+
+AUTHOR would be separated by commas if multiple authors are contained.
+This replaces the separator(,) AUTHOR contains with the line break(<br>)."
+  (mapconcat 'identity (split-string author "[ \t]*,[ \t]*") "<br>"))
+
 (defun org-html5presentation-title-slide-template (info)
   "Return document string of the title slide. INFO is a plist
 holding export options."
@@ -498,7 +505,7 @@ holding export options."
 			    (org-string-nw-p author))
 		   (format "<p class=\"author\">%s: %s</p>\n"
 			   (org-html--translate "Author" info)
-			   author))
+			   (org-html5presentation--build-author author)))
 		 (when (and (plist-get info :with-email)
 			    (org-string-nw-p email))
 		   (format "<p class=\"email\">%s: %s</p>\n"
